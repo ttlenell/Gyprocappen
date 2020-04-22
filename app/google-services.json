@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "929887321073",
+    "firebase_url": "https://gyproc-a4fc7.firebaseio.com",
+    "project_id": "gyproc-a4fc7",
+    "storage_bucket": "gyproc-a4fc7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929887321073:android:37791dffd6e31087e4a250",
+        "android_client_info": {
+          "package_name": "com.example.gyproc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929887321073-86k5mv45fkek44eochletveic2clhvts.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdj8co_ad2DIsKTUwtqPp_uEXpj6zEFIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929887321073-86k5mv45fkek44eochletveic2clhvts.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
