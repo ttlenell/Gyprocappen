@@ -23,6 +23,9 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (supportActionBar != null)
+            supportActionBar?.hide()
+
 
 
         register_button_register.setOnClickListener {
@@ -61,8 +64,11 @@ class RegisterActivity : AppCompatActivity() {
             selectedPhotoUri = data.data
 
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
-            val bitmapDrawable = BitmapDrawable(bitmap)
-            select_user_photo.setBackgroundDrawable(bitmapDrawable)
+            selectphoto_imageview.setImageBitmap(bitmap)
+
+            select_user_photo.alpha = 0f
+//            val bitmapDrawable = BitmapDrawable(bitmap)
+//            select_user_photo.setBackgroundDrawable(bitmapDrawable)
         }
     }
 
@@ -133,8 +139,17 @@ class RegisterActivity : AppCompatActivity() {
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d("Main", "Saved a user to Firebase Database")
+
+                val intent = Intent(this, MessagesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
             }
-    }
+
+            .addOnFailureListener {
+                Log.d("Main","Failed to set value to database: ${it.message}")
+            }
+            }
+
 }
 
 class User(val uid : String, val username : String, val profileImageUrl : String)
