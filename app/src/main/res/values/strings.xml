@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Gyproc</string>
-    <string name="användarnamn">användarnamn</string>
+    <string name="username">användarnamn</string>
+    <string name="send">Skicka</string>
+    <string name="password">lösenord</string>
+    <string name="writeSomething">Skriv något</string>
 </resources>
