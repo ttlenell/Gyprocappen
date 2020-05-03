@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".messages.ChatLogActivity">
 
     <EditText
         android:id="@+id/edittext_chat"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:background="@android:color/white"
         android:ems="10"
         android:hint="Skriv något.."
         android:inputType="textPersonName"
-        android:text="@string/writeSomething"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/send_button_chat"
         app:layout_constraintStart_toStartOf="parent" />
@@ -22,15 +25,21 @@
         android:id="@+id/send_button_chat"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/rounded_button"
         android:text="@string/send"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_chat_log"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/holo_blue_dark"
         app:layout_constraintBottom_toTopOf="@+id/edittext_chat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

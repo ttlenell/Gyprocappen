@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.gyproc.R
-import com.example.gyproc.registerlogin.User
+import com.example.gyproc.models.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -32,6 +32,10 @@ class NewMessageActivity : AppCompatActivity() {
 
         fetchUsers()
     }
+
+    companion object {
+        val USER_KEY = "USER_KEY"
+    }
     private fun fetchUsers() {
       val ref = FirebaseDatabase.getInstance().getReference("/users")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
@@ -51,7 +55,11 @@ class NewMessageActivity : AppCompatActivity() {
 
                 adapter.setOnItemClickListener { item, view ->
 
+                    val userItem = item as UserItem
+
                     val intent = Intent(view.context, ChatLogActivity::class.java)
+                 //   intent.putExtra(USER_KEY, userItem.user.username)
+                    intent.putExtra(USER_KEY, userItem.user )
                     startActivity(intent)
 
                     finish()

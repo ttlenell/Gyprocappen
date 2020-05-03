@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import com.example.gyproc.R
+import com.example.gyproc.models.User
 import com.example.gyproc.messages.MessagesActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -156,6 +157,4 @@ class RegisterActivity : AppCompatActivity() {
 
 }
 
-class User(val uid : String, val username : String, val profileImageUrl : String) {
-    constructor() : this("","","")
-}
+

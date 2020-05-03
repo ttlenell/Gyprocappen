@@ -17,7 +17,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_edittext_register_login"
         android:ems="10"
-        android:hint="@string/användarnamn"
+        android:hint="@string/username"
         android:inputType="textPersonName"
         android:paddingLeft="16dp"
         android:textColor="@android:color/black"
