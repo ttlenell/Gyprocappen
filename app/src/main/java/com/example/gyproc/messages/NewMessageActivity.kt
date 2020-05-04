@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.gyproc.R
+import com.example.gyproc.messages.MessagesActivity.Companion.currentUser
 import com.example.gyproc.models.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -48,9 +49,13 @@ class NewMessageActivity : AppCompatActivity() {
                 p0.children.forEach {
                     Log.d("Main", it.toString())
                     val user = it.getValue(User::class.java)
+
                     if (user != null) {
-                        adapter.add(UserItem(user))
+                        if (user.username != currentUser?.username) {
+                            adapter.add(UserItem(user))
+                        }
                     }
+
                 }
 
                 adapter.setOnItemClickListener { item, view ->

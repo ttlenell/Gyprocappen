@@ -73,8 +73,9 @@ class ChatLogActivity : AppCompatActivity() {
                     } else {
                         adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
-
                 }
+
+                recyclerview_chat_log.scrollToPosition(adapter.itemCount -1)
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -91,6 +92,8 @@ class ChatLogActivity : AppCompatActivity() {
             }
         })
     }
+
+
 
 
     private fun performSendMessage() {

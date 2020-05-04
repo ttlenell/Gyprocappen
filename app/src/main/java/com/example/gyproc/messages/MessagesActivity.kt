@@ -6,26 +6,24 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.core.content.ContextCompat.startActivity
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.gyproc.R
-import com.example.gyproc.messages.MessagesActivity.Companion.currentUser
+import com.example.gyproc.messages.NewMessageActivity.Companion.USER_KEY
 import com.example.gyproc.models.ChatMessage
 import com.example.gyproc.models.User
 import com.example.gyproc.registerlogin.RegisterActivity
+import com.example.gyproc.views.LatestMessageRow
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_messages.*
-import kotlinx.android.synthetic.main.latest_message_row.view.*
 
 class MessagesActivity : AppCompatActivity() {
 
     companion object {
         var currentUser: User? = null
+        val TAG = "LatestMessages"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +31,19 @@ class MessagesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_messages)
 
         recycler_latest_messages.adapter = adapter
+        recycler_latest_messages.addItemDecoration(DividerItemDecoration(this,
+            DividerItemDecoration.VERTICAL))
 
-//        setupDummyRows()
+
+        adapter.setOnItemClickListener { item, view ->
+            val intent = Intent(this, ChatLogActivity::class.java)
+
+           val row = item as LatestMessageRow
+
+            intent.putExtra(USER_KEY,row.chatPartnerUser )
+
+            startActivity(intent)
+        }
 
         listenforLatestMessages()
         fetchCurrentUser()
@@ -42,41 +51,7 @@ class MessagesActivity : AppCompatActivity() {
         verifyUserIsLoggedIn()
     }
 
-    class LatestMessageRow(val chatMessage: ChatMessage) : Item<GroupieViewHolder>() {
 
-        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-
-            viewHolder.itemView.message_textview_latest_message.text = chatMessage.text
-
-            val chatPartnerId: String
-            if(chatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                chatPartnerId = chatMessage.toId
-            } else {
-                chatPartnerId = chatMessage.fromId
-            }
-
-            val ref = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
-            ref.addListenerForSingleValueEvent(object: ValueEventListener {
-                override fun onDataChange(p0: DataSnapshot) {
-                    val user = p0.getValue(User::class.java)
-                    viewHolder.itemView.username_textview_latest_message.text = user?.username
-
-                    val targetImageView = viewHolder.itemView.imageview_latest_message
-                    Picasso.get().load(user?.profileImageUrl).into(targetImageView)
-                }
-
-                override fun onCancelled(p0: DatabaseError) {
-
-                }
-            })
-
-
-        }
-
-        override fun getLayout(): Int {
-            return R.layout.latest_message_row
-        }
-    }
 
     val latestMessageMap = HashMap<String, ChatMessage>()
 
@@ -116,20 +91,6 @@ class MessagesActivity : AppCompatActivity() {
         })
     }
     val adapter = GroupAdapter<GroupieViewHolder>()
-
-//        private fun setupDummyRows() {
-//
-//
-//            adapter.add(LatestMessageRow())
-//            adapter.add(LatestMessageRow())
-//            adapter.add(LatestMessageRow())
-//            adapter.add(LatestMessageRow())
-//
-//
-//
-//        }
-
-
 
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
@@ -173,7 +134,7 @@ class MessagesActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.nav_menu, menu)
+        menuInflater.inflate(R.menu.nav_menu_chat, menu)
         return super.onCreateOptionsMenu(menu)
     }
     }
