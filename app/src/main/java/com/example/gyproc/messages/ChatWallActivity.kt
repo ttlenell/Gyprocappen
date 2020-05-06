@@ -30,8 +30,8 @@ class ChatWallActivity : AppCompatActivity() {
     }
 
     val adapter = GroupAdapter<GroupieViewHolder>()
-    val currentUser = MainScreenActivity.currentUser
-    var toUser: User? = null
+//    val currentUser = MainScreenActivity.currentUser
+//    var toUser: User? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,10 +66,10 @@ class ChatWallActivity : AppCompatActivity() {
 
                     if (chatWall.fromId == FirebaseAuth.getInstance().uid) {
                         val currentUser = MainScreenActivity.currentUser ?: return
+
                         adapter.add(ChatFromItem(chatWall.text, currentUser))
 
-                    } else {
-                        adapter.add(ChatToItem(chatWall.text, toUser!!))
+
                     }
                 }
 
@@ -98,11 +98,9 @@ class ChatWallActivity : AppCompatActivity() {
     private fun performSendMessage() {
 
         val text = edittext_chat.text.toString()
-        val fromId = FirebaseAuth.getInstance().uid
+        val fromId = FirebaseAuth.getInstance().uid ?: return
 //        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
 //        val toId = user.uid
-
-        if (fromId == null) return
 
         val reference = FirebaseDatabase.getInstance()
             .getReference("/user-wall-messages/$fromId").push()

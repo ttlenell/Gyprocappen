@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.example.gyproc.R
+import com.example.gyproc.dataactivities.LogbookActivity
 import com.example.gyproc.messages.ChatLogActivity
 import com.example.gyproc.messages.ChatWallActivity
 import com.example.gyproc.messages.MessagesActivity
 import com.example.gyproc.messages.NewMessageActivity
+import com.example.gyproc.models.ChatWall
 import com.example.gyproc.models.User
 import com.example.gyproc.registerlogin.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -28,15 +30,20 @@ class MainScreenActivity : AppCompatActivity() {
 
         verifyUserIsLoggedIn()
 
+        imageview_main_logbook.setOnClickListener {
+            val intent = Intent(this, LogbookActivity::class.java)
+            startActivity(intent)
+        }
+
         imageview_main_private_chat.setOnClickListener {
 
-            val intent = Intent(this, MessagesActivity::class.java)
+            val intent = Intent(this, ChatWall::class.java)
             startActivity(intent)
         }
 
         imageview_main_chatwall.setOnClickListener {
 
-            val intent = Intent(this,ChatWallActivity::class.java)
+            val intent = Intent(this, ChatWallActivity::class.java)
             startActivity(intent)
         }
     }

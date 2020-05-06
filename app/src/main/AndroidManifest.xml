@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".messages.ChatWallActivity"></activity>
+        <activity android:name=".dataactivities.LogbookActivity"></activity>
+        <activity android:name=".messages.ChatWallActivity" />
         <activity android:name=".mainscreen.MainScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +28,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".messages.MessagesActivity" />
         </activity>
-        <activity android:name=".messages.MessagesActivity"></activity>
+        <activity android:name=".messages.MessagesActivity" />
         <activity android:name=".registerlogin.RegisterActivity" />
         <activity android:name=".registerlogin.LoginActivity" />
     </application>
