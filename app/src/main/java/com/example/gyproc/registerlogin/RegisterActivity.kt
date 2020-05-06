@@ -9,8 +9,8 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import com.example.gyproc.R
+import com.example.gyproc.mainscreen.MainScreenActivity
 import com.example.gyproc.models.User
-import com.example.gyproc.messages.MessagesActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -32,8 +32,6 @@ class RegisterActivity : AppCompatActivity() {
         register_button_register.setOnClickListener {
 
             performRegister()
-//            saveUserToFirebaseDatabase(it.toString())
-
         }
 
         already_have_account_textview.setOnClickListener {
@@ -68,13 +66,10 @@ class RegisterActivity : AppCompatActivity() {
             selectphoto_imageview.setImageBitmap(bitmap)
 
             select_user_photo.alpha = 0f
-//            val bitmapDrawable = BitmapDrawable(bitmap)
-//            select_user_photo.setBackgroundDrawable(bitmapDrawable)
         }
     }
 
     private fun performRegister(){
-
 
         val email = email_edittext_register.text.toString()
         val password = password_edittext_register.text.toString()
@@ -94,7 +89,7 @@ class RegisterActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener {
                 if (!it.isSuccessful) return@addOnCompleteListener
-//                saveUserToFirebaseDatabase(it.toString())
+
 
                 // else if sucessful
                 Log.d("Main","Sucessfully created a user with uid: ${it.result?.user?.uid}")
@@ -140,21 +135,17 @@ class RegisterActivity : AppCompatActivity() {
             username_edittext_register.text.toString(),
             profileImageUrl
         )
-
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d("Main", "Saved a user to Firebase Database")
 
-                val intent = Intent(this, MessagesActivity::class.java)
+                val intent = Intent(this, MainScreenActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             }
-
             .addOnFailureListener {
                 Log.d("Main","Failed to set value to database: ${it.message}")
             }
             }
 
 }
-
-

@@ -6,10 +6,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gyproc.R
-import com.example.gyproc.messages.MessagesActivity
+import com.example.gyproc.mainscreen.MainScreenActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_main.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -28,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener{
                     if (!it.isSuccessful) return@addOnCompleteListener
                     Log.d("Main","Sucessfully logged user in: ${it.result?.user?.uid}")
-                    val intent = Intent(this, MessagesActivity::class.java)
+                    val intent = Intent(this, MainScreenActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
 

@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gyproc.R
+import com.example.gyproc.mainscreen.MainScreenActivity
+import com.example.gyproc.messages.MessagesActivity.Companion.currentUser
 import com.example.gyproc.models.ChatMessage
+import com.example.gyproc.models.ChatWall
 import com.example.gyproc.models.User
 import com.example.gyproc.views.ChatFromItem
 import com.example.gyproc.views.ChatToItem
@@ -18,7 +21,7 @@ import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.activity_chat_log.*
 
 
-class ChatLogActivity : AppCompatActivity() {
+class ChatWallActivity : AppCompatActivity() {
 
     companion object {
         val TAG = "Chatlog"
@@ -32,18 +35,15 @@ class ChatLogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
 
-
         recyclerview_chat.adapter = adapter
 
-        toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-
-        supportActionBar?.title = toUser?.username
+        supportActionBar?.title = "Chattvägg"
 
 
         listenForMessage()
 
         send_button_chat.setOnClickListener {
-            Log.d(TAG, "Hej")
+            Log.d(TAG, "Försöker skicka meddelande")
             performSendMessage()
         }
 
@@ -51,24 +51,22 @@ class ChatLogActivity : AppCompatActivity() {
 
     private fun listenForMessage() {
         val fromId = FirebaseAuth.getInstance().uid
-        val toId = toUser?.uid
-        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
+        val ref = FirebaseDatabase.getInstance().getReference("/user-wall-messages/$fromId")
 
         ref.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                val chatMessage = p0.getValue((ChatMessage::class.java))
+                val chatWall = p0.getValue((ChatWall::class.java))
 
-                if (chatMessage != null) {
-                    Log.d(TAG, chatMessage.text)
+                if (chatWall != null) {
+                    Log.d(TAG, chatWall.text)
 
-                    if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                        val currentUser = MessagesActivity.currentUser ?: return
-                        adapter.add(ChatFromItem(chatMessage.text, currentUser))
-                    } else {
-                        adapter.add(ChatToItem(chatMessage.text, toUser!!))
+                    chatWall.fromId == FirebaseAuth.getInstance().uid
+                        val currentUser = MainScreenActivity.currentUser ?: return
+                        adapter.add(ChatFromItem(chatWall.text, currentUser))
                     }
-                }
+//                    else {
+//                        adapter.add(ChatToItem(chatWall.text, toUser!!))
 
                 recyclerview_chat.scrollToPosition(adapter.itemCount -1)
             }
@@ -95,20 +93,20 @@ class ChatLogActivity : AppCompatActivity() {
 
         val text = edittext_chat.text.toString()
         val fromId = FirebaseAuth.getInstance().uid
-        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-        val toId = user.uid
+//        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+//        val toId = user.uid
 
         if (fromId == null) return
 
         val reference = FirebaseDatabase.getInstance()
-            .getReference("/user-messages/$fromId/$toId").push()
+            .getReference("/user-wall-messages/$fromId").push()
+//
+//        val toReference = FirebaseDatabase.getInstance()
+//            .getReference("/user-wall-messages/$toId/$fromId").push()
 
-        val toReference = FirebaseDatabase.getInstance()
-            .getReference("/user-messages/$toId/$fromId").push()
 
 
-
-        val chatMessage = ChatMessage(reference.key!!, text, fromId, toId,
+        val chatMessage = ChatWall(reference.key!!, text, fromId,
             System.currentTimeMillis() / 1000)
 
         reference.setValue(chatMessage)
@@ -117,15 +115,15 @@ class ChatLogActivity : AppCompatActivity() {
                 edittext_chat.text.clear()
                 recyclerview_chat.scrollToPosition(adapter.itemCount -1)
             }
-        toReference.setValue(chatMessage)
-
-        val latestMessageRef = FirebaseDatabase.getInstance()
-            .getReference("/latest-messages/$fromId/$toId")
-        latestMessageRef.setValue(chatMessage)
-
-        val latestMessageToRef = FirebaseDatabase.getInstance()
-            .getReference("/latest-messages/$toId/$fromId")
-        latestMessageToRef.setValue(chatMessage)
+//        toReference.setValue(chatMessage)
+//
+//        val latestMessageRef = FirebaseDatabase.getInstance()
+//            .getReference("/latest-messages/$fromId/$toId")
+//        latestMessageRef.setValue(chatMessage)
+//
+//        val latestMessageToRef = FirebaseDatabase.getInstance()
+//            .getReference("/latest-messages/$toId/$fromId")
+//        latestMessageToRef.setValue(chatMessage)
 
     }
-    }
+}
