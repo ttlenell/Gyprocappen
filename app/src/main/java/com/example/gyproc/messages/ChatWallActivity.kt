@@ -61,10 +61,11 @@ class ChatWallActivity : AppCompatActivity() {
                 if (chatWall != null) {
                     Log.d(TAG, chatWall.text)
 
-                    chatWall.fromId == FirebaseAuth.getInstance().uid
+                    if (chatWall.fromId == FirebaseAuth.getInstance().uid) {
                         val currentUser = MainScreenActivity.currentUser ?: return
                         adapter.add(ChatFromItem(chatWall.text, currentUser))
                     }
+                }
 //                    else {
 //                        adapter.add(ChatToItem(chatWall.text, toUser!!))
 
