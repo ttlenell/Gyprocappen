@@ -5,8 +5,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gyproc.R
 import com.example.gyproc.mainscreen.MainScreenActivity
-import com.example.gyproc.messages.MessagesActivity.Companion.currentUser
-import com.example.gyproc.models.ChatMessage
 import com.example.gyproc.models.ChatWall
 import com.example.gyproc.models.User
 import com.example.gyproc.views.ChatFromItem
@@ -19,6 +17,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.activity_chat_log.*
+import kotlinx.android.synthetic.main.activity_chat_log.edittext_chat
+import kotlinx.android.synthetic.main.activity_chat_log.recyclerview_chat
+import kotlinx.android.synthetic.main.activity_chat_log.send_button_chat
+import kotlinx.android.synthetic.main.activity_chat_wall.*
 
 
 class ChatWallActivity : AppCompatActivity() {
@@ -28,12 +30,13 @@ class ChatWallActivity : AppCompatActivity() {
     }
 
     val adapter = GroupAdapter<GroupieViewHolder>()
-
+    val currentUser = MainScreenActivity.currentUser
     var toUser: User? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat_log)
+        setContentView(R.layout.activity_chat_wall)
 
         recyclerview_chat.adapter = adapter
 
@@ -59,15 +62,16 @@ class ChatWallActivity : AppCompatActivity() {
                 val chatWall = p0.getValue((ChatWall::class.java))
 
                 if (chatWall != null) {
-                    Log.d(TAG, chatWall.text)
+                    Log.d(ChatLogActivity.TAG, chatWall.text)
 
                     if (chatWall.fromId == FirebaseAuth.getInstance().uid) {
                         val currentUser = MainScreenActivity.currentUser ?: return
                         adapter.add(ChatFromItem(chatWall.text, currentUser))
+
+                    } else {
+                        adapter.add(ChatToItem(chatWall.text, toUser!!))
                     }
                 }
-//                    else {
-//                        adapter.add(ChatToItem(chatWall.text, toUser!!))
 
                 recyclerview_chat.scrollToPosition(adapter.itemCount -1)
             }
@@ -90,6 +94,7 @@ class ChatWallActivity : AppCompatActivity() {
 
 
 
+
     private fun performSendMessage() {
 
         val text = edittext_chat.text.toString()
@@ -107,10 +112,10 @@ class ChatWallActivity : AppCompatActivity() {
 
 
 
-        val chatMessage = ChatWall(reference.key!!, text, fromId,
+        val chatWall = ChatWall(reference.key!!, text, fromId,
             System.currentTimeMillis() / 1000)
 
-        reference.setValue(chatMessage)
+        reference.setValue(chatWall)
             .addOnSuccessListener {
                 Log.d(TAG, "Saved our chat message: ${reference.key}")
                 edittext_chat.text.clear()

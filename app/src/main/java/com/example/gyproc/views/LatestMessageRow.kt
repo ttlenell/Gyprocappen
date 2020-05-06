@@ -2,6 +2,7 @@ package com.example.gyproc.views
 
 import com.example.gyproc.R
 import com.example.gyproc.models.ChatMessage
+import com.example.gyproc.models.ChatWall
 import com.example.gyproc.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
