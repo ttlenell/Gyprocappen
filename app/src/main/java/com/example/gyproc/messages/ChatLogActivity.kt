@@ -42,12 +42,14 @@ class ChatLogActivity : AppCompatActivity() {
 
         listenForMessage()
 
+
         send_button_chat.setOnClickListener {
             Log.d(TAG, "Hej")
             performSendMessage()
         }
 
     }
+
 
     private fun listenForMessage() {
         val fromId = FirebaseAuth.getInstance().uid

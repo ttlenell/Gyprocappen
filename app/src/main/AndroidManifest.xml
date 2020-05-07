@@ -4,12 +4,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/gyp_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/gyp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".dataactivities.LogbookActivity"></activity>
+        <activity android:name=".logbook.LogbookAddActivity"></activity>
+        <activity android:name=".logbook.LogbookActivity" />
         <activity android:name=".messages.ChatWallActivity" />
         <activity android:name=".mainscreen.MainScreenActivity">
             <intent-filter>

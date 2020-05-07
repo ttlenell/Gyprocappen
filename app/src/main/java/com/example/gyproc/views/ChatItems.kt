@@ -43,3 +43,4 @@ class ChatFromItem(val text: String, val user: User) : Item<GroupieViewHolder>()
     }
 }
 
+

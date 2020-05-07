@@ -1,6 +1,7 @@
 package com.example.gyproc.models
 
-class ChatWall(val id : String, val text : String, val fromId : String, val timestamp : Long) {
+class ChatWall(val id : String = "", val text : String = "",val fromId : String = "", val timestamp :
+Long = -1) {
 
-    constructor() : this( "","","",-1)
+
 }

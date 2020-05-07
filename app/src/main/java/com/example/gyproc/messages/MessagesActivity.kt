@@ -31,6 +31,7 @@ class MessagesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_messages)
 
         recycler_latest_messages.adapter = adapter
+
         recycler_latest_messages.addItemDecoration(DividerItemDecoration(this,
             DividerItemDecoration.VERTICAL))
 
@@ -48,7 +49,6 @@ class MessagesActivity : AppCompatActivity() {
         listenforLatestMessages()
         fetchCurrentUser()
 
-//        verifyUserIsLoggedIn()
     }
 
 
@@ -92,6 +92,7 @@ class MessagesActivity : AppCompatActivity() {
     }
     val adapter = GroupAdapter<GroupieViewHolder>()
 
+
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
@@ -106,7 +107,6 @@ class MessagesActivity : AppCompatActivity() {
             }
         })
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.menu_new_message -> {
