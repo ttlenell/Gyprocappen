@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.logbook_data_view.view.*
 
 class LogBookItems(val text: String, val user: User) : Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.textView.text = text
+        viewHolder.itemView.textview_logbook_title.text = text
 
         val uri = user.profileImageUrl
         val targetImageView = viewHolder.itemView.imageview_logbook_user

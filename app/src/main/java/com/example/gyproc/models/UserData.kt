@@ -36,8 +36,6 @@ class UserData(val contacts: MutableList<User> = mutableListOf()) {
                     }
 
                 }
-
-
             }
 
             override fun onCancelled(p0: DatabaseError) {

@@ -9,17 +9,14 @@ import com.example.gyproc.mainscreen.MainScreenActivity.Companion.currentUser
 import com.example.gyproc.models.ChatWall
 import com.example.gyproc.models.User
 import com.example.gyproc.models.UserData
-import com.example.gyproc.views.ChatFromItem
-import com.example.gyproc.views.ChatToItem
+import com.example.gyproc.views.ChatWallFrom
+import com.example.gyproc.views.ChatWallFromOthers
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import kotlinx.android.synthetic.main.activity_chat_log.*
-import kotlinx.android.synthetic.main.activity_chat_log.edittext_chat
-import kotlinx.android.synthetic.main.activity_chat_log.recyclerview_chat
-import kotlinx.android.synthetic.main.activity_chat_log.send_button_chat
 import kotlinx.android.synthetic.main.activity_chat_wall.*
+import java.util.*
 
 
 class ChatWallActivity : AppCompatActivity() {
@@ -70,9 +67,12 @@ class ChatWallActivity : AppCompatActivity() {
 
     lateinit var user : User
     lateinit var users : UserData
+//    lateinit var time : Timestamp
+//    lateinit var time : Date
 
     private fun listenForMessage() {
         users = UserData()
+
         val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/user-wall-messages")
 
@@ -83,28 +83,29 @@ class ChatWallActivity : AppCompatActivity() {
 
                 if (chatWall != null ) {
                     Log.d(TAG, chatWall.text)
+//                    time = Date()
 
                     if (chatWall.fromId == FirebaseAuth.getInstance().uid) {
 
+
                         user = currentUser!!
                         Log.d(TAG, "$currentUser")
-                        adapter.add(ChatFromItem(chatWall.text, user))
+                        adapter.add(ChatWallFrom(chatWall.text, user))
 
 
                     } else {
                         for (person in users.contacts) {
                             if(person.uid == chatWall.fromId) {
                                 user = person
-                                adapter.add(ChatToItem(chatWall.text, user))
+
+
+                                adapter.add(ChatWallFromOthers(chatWall.text,
+                                    user))
 
                             }
                         }
 //                        user = UserData().contacts
                     }
-
-
-
-//                    adapter.add(ChatFromItem(chatWall.text, user))
                     Log.d(TAG, "försöker lägga till i adapter")
 
                 }
@@ -139,8 +140,7 @@ class ChatWallActivity : AppCompatActivity() {
 //        val toReference = FirebaseDatabase.getInstance()
 //            .getReference("/user-wall-messages/$fromId").push()
 
-        val chatWall = ChatWall(reference.key!!, text, fromId,
-            System.currentTimeMillis() / 1000)
+        val chatWall = ChatWall(reference.key!!, text, fromId)
 
         reference.setValue(chatWall)
             .addOnSuccessListener {

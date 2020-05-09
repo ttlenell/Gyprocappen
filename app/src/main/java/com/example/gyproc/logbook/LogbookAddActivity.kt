@@ -1,20 +1,17 @@
 package com.example.gyproc.logbook
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.gyproc.R
-import com.example.gyproc.messages.ChatLogActivity
-import com.example.gyproc.models.ChatMessage
-import com.example.gyproc.models.LogBookEntry
+import com.example.gyproc.models.LogBook
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.GroupieViewHolder
-import kotlinx.android.synthetic.main.activity_chat_log.*
-import kotlinx.android.synthetic.main.activity_logbook.*
-import java.text.SimpleDateFormat
-import java.util.*
+import kotlinx.android.synthetic.main.activity_logbook_add.*
 
 class LogbookAddActivity : AppCompatActivity() {
 
@@ -23,35 +20,92 @@ class LogbookAddActivity : AppCompatActivity() {
         val USER_KEY = "USER_KEY"
     }
 
-    val adapter = GroupAdapter<GroupieViewHolder>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logbook_add)
 
-        recyclerview_logbook.adapter = adapter
+        supportActionBar?.title = "Ny logg"
+
+        logbook_shift_chooser.setOnClickListener {
+            showDialog()
+        }
+
+        logbook_add_save_button.setOnClickListener {
+            addToLogbook()
+            val intent = Intent(this,LogbookActivity::class.java)
+//            intent.putExtra(USER_KEY, )
+//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
+
+
     }
 
-    fun addLogbookItem() {
+    private fun showDialog() {
+        // Method to show an alert dialog with multiple choice list items
 
-        val fromId = FirebaseAuth.getInstance().uid
+            // Late initialize an alert dialog object
+            lateinit var dialog: AlertDialog
+
+            // Initialize an array of colors
+            val arrayShifts = arrayOf("06-14", "14-22", "22-06", "06-18", "18-06")
+
+            // Initialize a new instance of alert dialog builder object
+            val builder = AlertDialog.Builder(this)
+
+            // Set a title for alert dialog
+            builder.setTitle("Välj skiftpass")
+
+
+        builder.setSingleChoiceItems(arrayShifts,-1) { _, which ->
+            // Get the dialog selected item
+            val shift = arrayShifts[which]
+            toast("$shift pass valt")
+                    logbook_shift_chooser.text = shift
+
+            dialog.dismiss()
+        }
+
+            dialog = builder.create()
+
+            dialog.show()
+        }
+    fun Context.toast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+
+    fun addToLogbook() {
+
+        val fromId = FirebaseAuth.getInstance().uid ?: return
+        val text = logbook_add_textinput.text.toString()
+        val shift = logbook_shift_chooser.text.toString()
+//        val time =
+        Log.d(TAG,"$shift sparad")
+        Log.d(TAG,"$text sparad")
+
+
         val reference = FirebaseDatabase.getInstance()
-            .getReference("/logbook-entries/$fromId").push()
+            .getReference("/logbook-entries").push()
 
-//        val dateFormat: SimpleDateFormat = SimpleDateFormat("HH,MM dd/MM/yyyy", Locale.ENGLISH)
-//        recyclerview_logbook.add(dateFormat.format(Date()))
-
-        val logBookEntry = LogBookEntry(reference.key!!, "","")
+        val logBookEntry = LogBook(reference.key!!, text, fromId, shift)
 
         reference.setValue(logBookEntry)
             .addOnSuccessListener {
-                Log.d(TAG, "Saved the entry to the logbook: ${reference.key}")
-                edittext_chat.text.clear()
-                recyclerview_logbook.scrollToPosition(adapter.itemCount - 1)
-
-
+                Log.d(TAG, "Sparade logboksinlägg ${reference.key}")
+                logbook_add_textinput.text.clear()
             }
+
     }
-}
+    }
+
+
+    // Extension function to show toast message
+
+
+
+
+
 

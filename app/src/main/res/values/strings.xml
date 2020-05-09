@@ -4,4 +4,7 @@
     <string name="send">Skicka</string>
     <string name="password">lösenord</string>
     <string name="writeSomething">Skriv något</string>
+    <string name="logBookAddInfo">Välj pass och sen fyll i texten. Avsluta med spara</string>
+    <string name="saveButton">SPARA</string>
+    <string name="shift">Skift</string>
 </resources>

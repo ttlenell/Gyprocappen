@@ -7,7 +7,10 @@ import android.util.Log
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.gyproc.R
 import com.example.gyproc.mainscreen.MainScreenActivity
-import com.example.gyproc.models.LogBookEntry
+import com.example.gyproc.mainscreen.MainScreenActivity.Companion.currentUser
+import com.example.gyproc.models.LogBook
+import com.example.gyproc.models.LogBookData
+import com.example.gyproc.models.User
 import com.example.gyproc.views.LogBookItems
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -17,9 +20,12 @@ import kotlinx.android.synthetic.main.activity_logbook.*
 
 class LogbookActivity : AppCompatActivity() {
 
-  companion object {
-      val TAG = "Logbook entries"
-  }
+    companion object {
+        val TAG = "Logbook entries"
+
+        //      var currentUser: User? = null
+        val USER_KEY = "USER_KEY"
+    }
 
     val adapter = GroupAdapter<GroupieViewHolder>()
 
@@ -27,59 +33,89 @@ class LogbookActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logbook)
 
-
         recyclerview_logbook.adapter = adapter
-        recyclerview_logbook.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration
-            .VERTICAL))
+        recyclerview_logbook.addItemDecoration(
+            DividerItemDecoration(
+                this, DividerItemDecoration
+                    .VERTICAL
+            )
+        )
 
-        setupDummyLog()
+        supportActionBar?.title = "Loggbok"
+
+        fetchCurrentUser()
         listenForLogbookEntries()
 
         fab_logbook_add.setOnClickListener {
 
-            val intent = Intent(this,
+            val intent = Intent(
+                this,
                 LogbookAddActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
-
     }
-    val latestLogbookEntries = HashMap<String, LogBookEntry>()
 
-    private fun setupDummyLog() {
-        val adapter = GroupAdapter<GroupieViewHolder>()
-        adapter.clear()
-        val currentUser = MainScreenActivity.currentUser ?: return
-        latestLogbookEntries.values.forEach {
-            adapter.add(LogBookItems("hej", currentUser))
-            adapter.add(LogBookItems("hej2", currentUser))
-        }
+    private fun fetchCurrentUser() {
+        val uid = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
 
+            override fun onDataChange(p0: DataSnapshot) {
+                currentUser = p0.getValue(User::class.java)
+//                Log.d(TAG,"Current user ${MainScreenActivity.currentUser?.username}")
+            }
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
     }
+
+    lateinit var entries: LogBookData
+    lateinit var user: User
 
     fun listenForLogbookEntries() {
-        val fromId = FirebaseAuth.getInstance().uid
-        val ref = FirebaseDatabase.getInstance().
-        getReference("/logbook-entries/$fromId")
+
+        entries = LogBookData()
+
+//        val fromId = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/logbook-entries")
 
 
         ref.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                val logBookEntry = p0.getValue(LogBookEntry::class.java)
+                val logBook = p0.getValue(LogBook::class.java)
 
-                if(logBookEntry != null) {
-                    Log.d(TAG,logBookEntry?.title)
+                if (logBook != null) {
+                    Log.d(TAG, logBook.text)
 
-                    if(logBookEntry.fromId == FirebaseAuth.getInstance().uid) {
+                    val currentUser = currentUser ?: return
+                    user = currentUser
 
-                        val currentUser = MainScreenActivity.currentUser ?: return
-                        Log.d(TAG, "$currentUser")
+                    Log.d(TAG,"Current user ${MainScreenActivity.currentUser?.username}")
+                    adapter.add(LogBookItems(logBook.text, user))
+                    Log.d(TAG, "försöker lägga till i adapter")
 
-                        adapter.add(LogBookItems(logBookEntry.title, currentUser))
-                        Log.d(TAG, "försöker lägga till i adapter")
+
+//                    for (entry in entries.entries) {
+//                        if (entry.id == logBook.fromId) {
+////                            user = user
+//                            Log.d(TAG, entry.id + entry.fromId + entry.shift)
+//
+//
+//                            if (logBook.fromId == FirebaseAuth.getInstance().uid) {
+//
+//                                adapter.add(LogBookItems(logBook.text, user))
+//                                Log.d(TAG, "försöker lägga till i adapter")
+//                            }
+//                        }
+//                    }
+                        }
                     }
-                }
-            }
+
+
+
 
             override fun onCancelled(p0: DatabaseError) {
             }
@@ -94,5 +130,7 @@ class LogbookActivity : AppCompatActivity() {
             }
 
         })
+
     }
 }
+
