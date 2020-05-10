@@ -33,8 +33,8 @@ class LogbookActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logbook)
 
-        recyclerview_logbook.adapter = adapter
-        recyclerview_logbook.addItemDecoration(
+        recyclerview_data_posts.adapter = adapter
+        recyclerview_data_posts.addItemDecoration(
             DividerItemDecoration(
                 this, DividerItemDecoration
                     .VERTICAL
@@ -43,16 +43,24 @@ class LogbookActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Loggbok"
 
+        
         fetchCurrentUser()
         listenForLogbookEntries()
 
-        fab_logbook_add.setOnClickListener {
+        fab_add_post.setOnClickListener {
 
             val intent = Intent(
                 this,
                 LogbookAddActivity::class.java)
 //            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+        }
+
+        adapter.setOnItemClickListener {
+            val intent = Intent(context.LogbookAddActivity::class.java)
+
+            intent.putExtra("POSITION_KEY", PositionLog)
+            context.startActivity(intent)
         }
     }
 
@@ -92,25 +100,13 @@ class LogbookActivity : AppCompatActivity() {
 
                     val currentUser = currentUser ?: return
                     user = currentUser
+                    val shift = logBook.shift
 
                     Log.d(TAG,"Current user ${MainScreenActivity.currentUser?.username}")
-                    adapter.add(LogBookItems(logBook.text, user))
+                    adapter.add(LogBookItems(logBook.text, user, shift))
                     Log.d(TAG, "försöker lägga till i adapter")
 
 
-//                    for (entry in entries.entries) {
-//                        if (entry.id == logBook.fromId) {
-////                            user = user
-//                            Log.d(TAG, entry.id + entry.fromId + entry.shift)
-//
-//
-//                            if (logBook.fromId == FirebaseAuth.getInstance().uid) {
-//
-//                                adapter.add(LogBookItems(logBook.text, user))
-//                                Log.d(TAG, "försöker lägga till i adapter")
-//                            }
-//                        }
-//                    }
                         }
                     }
 

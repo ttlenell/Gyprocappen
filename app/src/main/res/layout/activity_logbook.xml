@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_logbook"
+        android:id="@+id/recyclerview_data_posts"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/holo_blue_light"
@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_logbook_add"
+        android:id="@+id/fab_add_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"

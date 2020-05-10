@@ -18,13 +18,19 @@ class LogbookAddActivity : AppCompatActivity() {
     companion object {
         val TAG = "LogbookAdd"
         val USER_KEY = "USER_KEY"
+        const val POSITION_NOT_SET = -1
+        const val POSITION_KEY = "POSITION"
     }
+
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logbook_add)
+
+        var PositionLog =
+            POSITION_NOT_SET
 
         supportActionBar?.title = "Ny logg"
 
@@ -80,7 +86,7 @@ class LogbookAddActivity : AppCompatActivity() {
     fun addToLogbook() {
 
         val fromId = FirebaseAuth.getInstance().uid ?: return
-        val text = logbook_add_textinput.text.toString()
+        val text = logbook_add_edittext.text.toString()
         val shift = logbook_shift_chooser.text.toString()
 //        val time =
         Log.d(TAG,"$shift sparad")
@@ -95,7 +101,8 @@ class LogbookAddActivity : AppCompatActivity() {
         reference.setValue(logBookEntry)
             .addOnSuccessListener {
                 Log.d(TAG, "Sparade logboksinlägg ${reference.key}")
-                logbook_add_textinput.text.clear()
+                Log.d(TAG,"shift = $shift, text = $text, fromId = $fromId")
+                logbook_add_edittext.text.clear()
             }
 
     }

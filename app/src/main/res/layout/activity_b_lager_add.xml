@@ -7,13 +7,14 @@
     tools:context=".logbook.LogbookAddActivity">
 
     <EditText
-        android:id="@+id/logbook_add_edittext"
+        android:id="@+id/b_lager_add_textinput"
         android:layout_width="276dp"
         android:layout_height="290dp"
         android:background="@drawable/square_edittext"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/writeSomething"
+        android:autofillHints="@string/writeSomething"
         android:inputType="textMultiLine"
         android:textAllCaps="false"
         android:textColorLink="#FFFFFF"
@@ -23,33 +24,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/logbook_add_save_button"
+        android:id="@+id/b_lager_add_save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/saveButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logbook_add_edittext" />
+        app:layout_constraintTop_toBottomOf="@+id/b_lager_add_textinput" />
 
     <TextView
-        android:id="@+id/logbook_add_textview"
+        android:id="@+id/b_lager_add_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/logBookAddInfo"
-        app:layout_constraintBottom_toTopOf="@+id/logbook_add_edittext"
+        android:text="@string/bLagerAddInfo"
+        app:layout_constraintBottom_toTopOf="@+id/b_lager_add_textinput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/logbook_shift_chooser"
+        android:id="@+id/b_lager_product_chooser"
         android:layout_width="wrap_content"
-        android:background="@drawable/rounded_button"
         android:layout_height="wrap_content"
-        android:text="@string/shift"
-        app:layout_constraintBottom_toTopOf="@+id/logbook_add_edittext"
+        android:background="@drawable/rounded_button"
+        android:text="@string/product"
+        app:layout_constraintBottom_toTopOf="@+id/b_lager_add_textinput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logbook_add_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/b_lager_add_textview" />
 </androidx.constraintlayout.widget.ConstraintLayout>

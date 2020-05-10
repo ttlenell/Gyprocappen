@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.example.gyproc.R
+import com.example.gyproc.blager.BLagerActivity
 import com.example.gyproc.logbook.LogbookActivity
 import com.example.gyproc.messages.ChatLogActivity
 import com.example.gyproc.messages.ChatWallActivity
@@ -44,6 +45,11 @@ class MainScreenActivity : AppCompatActivity() {
         imageview_main_chatwall.setOnClickListener {
 
             val intent = Intent(this, ChatWallActivity::class.java)
+            startActivity(intent)
+        }
+
+        imageview_main_blager.setOnClickListener {
+            val intent = Intent(this, BLagerActivity::class.java)
             startActivity(intent)
         }
     }

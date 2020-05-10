@@ -7,11 +7,11 @@ import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
-import kotlinx.android.synthetic.main.chat_to_row.view.textview_logbook_title
+import kotlinx.android.synthetic.main.chat_to_row.view.textview_logbook_username
 
 class ChatFromItem(val text: String, val user: User): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.textview_logbook_title.text = text
+        viewHolder.itemView.textview_logbook_username.text = text
 
         val uri = user.profileImageUrl
         val targetImageView = viewHolder.itemView.imageview_chat_to_row
@@ -28,7 +28,7 @@ class ChatFromItem(val text: String, val user: User): Item<GroupieViewHolder>() 
 
 class ChatToItem(val text: String, val user: User) : Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.textview_logbook_title.text = text
+        viewHolder.itemView.textview_logbook_username.text = text
 
         val uri = user.profileImageUrl
         val targetImageView = viewHolder.itemView.imageview_chat_from_row

@@ -5,7 +5,7 @@ import com.example.gyproc.models.User
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
-import kotlinx.android.synthetic.main.chat_to_row.view.textview_logbook_title
+import kotlinx.android.synthetic.main.chat_to_row.view.textview_logbook_username
 import kotlinx.android.synthetic.main.chatwall_from_others_row.view.*
 import kotlinx.android.synthetic.main.chatwall_from_row.view.*
 import java.text.SimpleDateFormat
@@ -16,7 +16,7 @@ class ChatWallFrom(val text: String, val user: User): Item<GroupieViewHolder>() 
         .getDateTimeInstance(SimpleDateFormat.SHORT, SimpleDateFormat.SHORT)
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.textview_logbook_title.text = text
+        viewHolder.itemView.textview_logbook_username.text = text
         viewHolder.itemView.username_textview_chatwall_from_row.text = user.username
 //        viewHolder.itemView.timeView_chatwall_from_row.text = dateFormat.format(time)
 
@@ -41,7 +41,7 @@ class ChatWallFromOthers(val text: String, val user: User) : Item<GroupieViewHol
 
 //        viewHolder.itemView.timeView_chatwall_from_others_row.text = dateFormat.format(time)
 
-        viewHolder.itemView.textview_logbook_title.text = text
+        viewHolder.itemView.textview_logbook_username.text = text
 
         viewHolder.itemView.username_textview_chatwall_from_others_row.text = user.username
 
