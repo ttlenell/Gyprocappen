@@ -12,25 +12,20 @@ import com.example.gyproc.models.LogBook
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_logbook_add.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class LogbookAddActivity : AppCompatActivity() {
 
     companion object {
         val TAG = "LogbookAdd"
         val USER_KEY = "USER_KEY"
-        const val POSITION_NOT_SET = -1
-        const val POSITION_KEY = "POSITION"
+
     }
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logbook_add)
-
-        var PositionLog =
-            POSITION_NOT_SET
 
         supportActionBar?.title = "Ny logg"
 
@@ -40,10 +35,11 @@ class LogbookAddActivity : AppCompatActivity() {
 
         logbook_add_save_button.setOnClickListener {
             addToLogbook()
-            val intent = Intent(this,LogbookActivity::class.java)
-//            intent.putExtra(USER_KEY, )
-//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
+//            val intent = Intent(this,LogbookActivity::class.java)
+////            intent.putExtra(USER_KEY, POSITION_KEY)
+////            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+//            startActivity(intent)
+            finish()
         }
 
 
@@ -88,7 +84,17 @@ class LogbookAddActivity : AppCompatActivity() {
         val fromId = FirebaseAuth.getInstance().uid ?: return
         val text = logbook_add_edittext.text.toString()
         val shift = logbook_shift_chooser.text.toString()
-//        val time =
+
+
+        val calendar = Calendar.getInstance()
+        val date : Date = calendar.time
+
+        val dateFormat = SimpleDateFormat("E dd-MMM")
+        val dateToFirebase = dateFormat.format(date)
+
+
+
+        Log.d(TAG,"$date sparad")
         Log.d(TAG,"$shift sparad")
         Log.d(TAG,"$text sparad")
 
@@ -96,7 +102,7 @@ class LogbookAddActivity : AppCompatActivity() {
         val reference = FirebaseDatabase.getInstance()
             .getReference("/logbook-entries").push()
 
-        val logBookEntry = LogBook(reference.key!!, text, fromId, shift)
+        val logBookEntry = LogBook(reference.key!!, text, fromId, shift, dateToFirebase)
 
         reference.setValue(logBookEntry)
             .addOnSuccessListener {
@@ -107,12 +113,4 @@ class LogbookAddActivity : AppCompatActivity() {
 
     }
     }
-
-
-    // Extension function to show toast message
-
-
-
-
-
 

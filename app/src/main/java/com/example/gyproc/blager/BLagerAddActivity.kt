@@ -31,9 +31,9 @@ class BLagerAddActivity : AppCompatActivity() {
             "GKBE", "GKB",
             "GFE", "GF",
             "GHOE", "GHO",
-            "GHOE X", "GEE",
+            "GXUE", "GXU",
             "GRE", "GR",
-            "GG",
+            "GG", "GEE",
             "GUE", "GU",
             "GSE", "GFUE")
 

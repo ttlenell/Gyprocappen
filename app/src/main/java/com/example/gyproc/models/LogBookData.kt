@@ -14,7 +14,6 @@ class LogBookData(val entries: MutableList<LogBook> = mutableListOf()) {
 
             override fun onDataChange(p0: DataSnapshot) {
 
-
                 p0.children.forEach {
                     Log.d("Main", it.toString())
                     val entry = it.getValue(LogBook::class.java)

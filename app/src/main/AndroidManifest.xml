@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/gyp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".blager.BLagerAddActivity"></activity>
+        <activity android:name=".logbook.LogbookShowLogActivity"></activity>
+        <activity android:name=".blager.BLagerAddActivity" />
         <activity android:name=".blager.BLagerActivity" />
         <activity android:name=".logbook.LogbookAddActivity" />
         <activity android:name=".logbook.LogbookActivity" />
