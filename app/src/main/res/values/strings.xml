@@ -9,4 +9,14 @@
     <string name="saveButton">SPARA</string>
     <string name="shift">Skift</string>
     <string name="product">Produkt</string>
+    <string name="mainScreen">Startsida</string>
+    <string name="chatWall">Chattvägg</string>
+    <string name="chatPrivate">Privat Chatt</string>
+    <string name="bLager">B-Lager</string>
+    <string name="logBook">Logbok</string>
+    <string name="avvikelser">Avvikelser</string>
+    <string name="schedule">Schema</string>
+    <string name="vatutskott">Våtutskott</string>
+    <string name="signOut">Logga ut</string>
+    <string name="newMessage">Nytt meddelande</string>
 </resources>

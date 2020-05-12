@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/nav_mainscreen"
+            android:icon="@drawable/ic_messages_wall"
+            android:title="@string/mainScreen"/>
+        <item
+            android:id="@+id/nav_avvikelser"
+            android:icon="@drawable/ic_avvikelser"
+            android:title="@string/avvikelser"/>
+        <item
+            android:id="@+id/nav_b_lager"
+            android:icon="@drawable/ic_folder"
+            android:title="@string/bLager"/>
+        <item
+            android:id="@+id/nav_vatutskott"
+            android:icon="@drawable/ic_vatutskott"
+            android:title="@string/vatutskott"/>
+        <item
+            android:id="@+id/nav_messages_wall"
+            android:icon="@drawable/ic_messages_wall"
+            android:title="@string/chatWall"/>
+        <item
+            android:id="@+id/nav_messages_private"
+            android:icon="@drawable/ic_messages_private"
+            android:title="@string/chatPrivate"/>
+        <item
+            android:id="@+id/nav_logbook"
+            android:icon="@drawable/ic_messages_wall"
+            android:title="@string/logBook"/>
+        <item
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/ic_messages_wall"
+            android:title="@string/schedule"/>
+
+
+    </group>
+
+
+    <item android:title="Account Settings">
+        <menu>
+
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_signout"
+                android:title="Sign Out"/>
+        </menu>
+    </item>
+</menu>

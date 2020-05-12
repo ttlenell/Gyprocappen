@@ -8,10 +8,4 @@
         android:title="Nytt meddelande"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/menu_sign_out"
-        android:title="Logga ut"
-        app:showAsAction="ifRoom" />
-
-
 </menu>
