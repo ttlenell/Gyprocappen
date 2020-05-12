@@ -15,7 +15,8 @@
         <activity android:name=".logbook.LogbookAddActivity" />
         <activity android:name=".logbook.LogbookActivity" />
         <activity android:name=".messages.ChatWallActivity" />
-        <activity android:name=".mainscreen.MainScreenActivity">
+        <activity android:name=".mainscreen.MainScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

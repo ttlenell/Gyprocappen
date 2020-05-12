@@ -12,7 +12,7 @@ import java.util.*
 class LogBookItems(val text: String, val user: User, private val shiftView : String, val
 dateToFirebase : String) :
     Item<GroupieViewHolder>() {
-
+//
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.textView_logbook_username.text = user.username
         viewHolder.itemView.textView_logbook_text.text = text
