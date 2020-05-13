@@ -156,7 +156,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             override fun onDataChange(p0: DataSnapshot) {
                 currentUser = p0.getValue(User::class.java)
                 Log.d(TAG,"Current user ${MainScreenActivity.currentUser?.username}")
-                Picasso.get().load(currentUser?.profileImageUrl).into(nav_imageview_photo_user)
+                Picasso.get().load(currentUser?.profileImageUrl).into(nav_userphoto)
                 navView.nav_textview_username.text = currentUser?.username
             }
             override fun onCancelled(p0: DatabaseError) {

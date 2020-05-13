@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -29,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.activity_chat_log.*
+import kotlinx.android.synthetic.main.content_chat_log.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -60,6 +62,18 @@ class ChatLogActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
         listenForMessage()
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, toolbar, 0, 0
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        navView.setNavigationItemSelectedListener(this)
 
 
         send_button_chat.setOnClickListener {
@@ -121,7 +135,7 @@ class ChatLogActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     val calendar = Calendar.getInstance()
     val date : Date = calendar.time
 
-    val dateFormat = SimpleDateFormat("E dd-MMM")
+    val dateFormat = SimpleDateFormat("E dd-MMM HH:mm")
     val dateToFirebase = dateFormat.format(date)
 
 
@@ -130,19 +144,21 @@ class ChatLogActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val toId = toUser?.uid
         val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
+
         ref.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatMessage = p0.getValue((ChatMessage::class.java))
+                val timeCreated = chatMessage!!.timestamp
 
                 if (chatMessage != null) {
                     Log.d(TAG, chatMessage.text)
 
                     if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
                         val currentUser = MessagesActivity.currentUser ?: return
-                        adapter.add(ChatFromItem(chatMessage.text, currentUser,dateToFirebase))
+                        adapter.add(ChatFromItem(chatMessage.text, currentUser,timeCreated))
                     } else {
-                        adapter.add(ChatToItem(chatMessage.text, toUser!!))
+                        adapter.add(ChatToItem(chatMessage.text, toUser!!,timeCreated))
                     }
                 }
 

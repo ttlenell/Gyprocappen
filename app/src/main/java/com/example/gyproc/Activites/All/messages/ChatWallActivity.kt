@@ -51,7 +51,7 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         recyclerview_chat_wall.adapter = adapter
 
-        supportActionBar?.title = "Chattvägg"
+//        supportActionBar?.title = "Chattvägg"
         listenForMessage()
         fetchCurrentUser()
 
@@ -160,11 +160,11 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     lateinit var user : User
     lateinit var users : UserData
-//    lateinit var time : Timestamp
-//    lateinit var time : Date
+
 
     private fun listenForMessage() {
         users = UserData()
+
 
         val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/user-wall-messages")
@@ -181,9 +181,11 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     if (chatWall.fromId == FirebaseAuth.getInstance().uid) {
 
 
+
                         user = currentUser!!
                         Log.d(TAG, "$currentUser")
                         adapter.add(ChatWallFrom(chatWall.text, user))
+
                         Log.d(TAG, "försöker lägga till från inloggad")
 
 
@@ -193,12 +195,13 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                                 user = person
 
 
-                                adapter.add(ChatWallFromOthers(chatWall.text,
-                                    user))
+                                adapter.add(ChatWallFromOthers(chatWall.text,user)
+                                )
                                 Log.d(TAG, "försöker lägga till från andra")
 
                             }
                         }
+
                     }
 
 

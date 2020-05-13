@@ -11,7 +11,7 @@
     android:paddingBottom="15dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/nav_imageview_photo_user"
+        android:id="@+id/nav_userphoto"
         android:layout_marginBottom="15dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
