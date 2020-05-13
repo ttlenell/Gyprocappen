@@ -1,34 +1,43 @@
-package com.example.gyproc.logbook
+package com.example.gyproc.Activites.All.logbook
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.gyproc.R
-import com.example.gyproc.mainscreen.MainScreenActivity
-import com.example.gyproc.mainscreen.MainScreenActivity.Companion.currentUser
+import com.example.gyproc.Activites.All.blager.BLagerActivity
+import com.example.gyproc.Activites.All.mainscreen.MainScreenActivity
+import com.example.gyproc.Activites.All.mainscreen.MainScreenActivity.Companion.currentUser
+import com.example.gyproc.Activites.All.messages.ChatWallActivity
+import com.example.gyproc.Activites.All.messages.MessagesActivity
 import com.example.gyproc.models.LogBook
 import com.example.gyproc.models.User
 import com.example.gyproc.models.UserData
+import com.example.gyproc.Activites.All.registerlogin.RegisterActivity
 import com.example.gyproc.views.LogBookItems
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import kotlinx.android.synthetic.main.activity_logbook.*
+import kotlinx.android.synthetic.main.content_logbook.*
 
-class LogbookActivity : AppCompatActivity() {
+class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     companion object {
         val TAG = "Logbook entries"
 
-        //      var currentUser: User? = null
-//        val USER_KEY = "USER_KEY"
-//
-//
-//        const val POSITION_KEY = "POSITION_KEY"
     }
+
+    lateinit var toolbar: Toolbar
+    lateinit var drawerLayout: DrawerLayout
+    lateinit var navView: NavigationView
 
     val adapter = GroupAdapter<GroupieViewHolder>()
 
@@ -44,12 +53,24 @@ class LogbookActivity : AppCompatActivity() {
                     .VERTICAL
             )
         )
-onResume()
-        supportActionBar?.title = "Loggbok"
-
+        onResume()
         fetchCurrentUser()
-//        fetchClickedLog()
         listenForLogbookEntries()
+//        supportActionBar?.title = "Loggbok"
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, toolbar, 0, 0
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        navView.setNavigationItemSelectedListener(this)
+
+
 
 
         fab_add_post.setOnClickListener {
@@ -65,6 +86,40 @@ onResume()
     override fun onResume() {
         super.onResume()
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+
+            R.id.nav_avvikelser -> {
+            }
+            R.id.nav_messages_private -> {
+                val intent = Intent(this, MessagesActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.nav_messages_wall -> {
+                val intent = Intent(this, ChatWallActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_b_lager -> {
+                val intent = Intent(this, BLagerActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_logbook -> {
+                val intent = Intent(this,LogbookActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_logout -> {
+                FirebaseAuth.getInstance().signOut()
+                val intent = Intent(this, RegisterActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true
     }
 
 

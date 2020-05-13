@@ -1,7 +1,6 @@
-package com.example.gyproc.logbook
+package com.example.gyproc.Activites.All.logbook
 
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -35,10 +34,7 @@ class LogbookAddActivity : AppCompatActivity() {
 
         logbook_add_save_button.setOnClickListener {
             addToLogbook()
-//            val intent = Intent(this,LogbookActivity::class.java)
-////            intent.putExtra(USER_KEY, POSITION_KEY)
-////            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-//            startActivity(intent)
+
             finish()
         }
 
@@ -46,7 +42,7 @@ class LogbookAddActivity : AppCompatActivity() {
     }
 
     private fun showDialog() {
-        // Method to show an alert dialog with multiple choice list items
+
 
             // Late initialize an alert dialog object
             lateinit var dialog: AlertDialog

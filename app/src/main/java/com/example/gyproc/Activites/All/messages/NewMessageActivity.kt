@@ -1,11 +1,11 @@
-package com.example.gyproc.messages
+package com.example.gyproc.Activites.All.messages
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.gyproc.R
-import com.example.gyproc.messages.MessagesActivity.Companion.currentUser
+import com.example.gyproc.Activites.All.messages.MessagesActivity.Companion.currentUser
 import com.example.gyproc.models.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

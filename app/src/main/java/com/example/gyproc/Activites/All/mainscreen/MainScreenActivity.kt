@@ -1,26 +1,24 @@
-package com.example.gyproc.mainscreen
+package com.example.gyproc.Activites.All.mainscreen
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.gyproc.Activites.All.avvikelser.AvvikelserActivity
 import com.example.gyproc.R
-import com.example.gyproc.blager.BLagerActivity
-import com.example.gyproc.logbook.LogbookActivity
-import com.example.gyproc.messages.ChatLogActivity
-import com.example.gyproc.messages.ChatWallActivity
-import com.example.gyproc.messages.MessagesActivity
-import com.example.gyproc.models.ChatMessage
-import com.example.gyproc.models.ChatWall
+import com.example.gyproc.Activites.All.blager.BLagerActivity
+import com.example.gyproc.Activites.All.logbook.LogbookActivity
+import com.example.gyproc.Activites.All.messages.ChatWallActivity
+import com.example.gyproc.Activites.All.messages.MessagesActivity
 import com.example.gyproc.models.User
-import com.example.gyproc.registerlogin.RegisterActivity
+import com.example.gyproc.Activites.All.registerlogin.RegisterActivity
+import com.example.gyproc.Activites.All.schedule.ScheduleActivity
+import com.example.gyproc.Activites.All.vatutskott.VatutskottActivity
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -28,12 +26,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_main_screen.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.nav_header.view.*
-import kotlinx.android.synthetic.main.nav_header.view.nav_imageview_photo_user
-import kotlinx.android.synthetic.main.user_row_new_message.view.*
+
 
 class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -65,12 +61,6 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
 
-//        val currentUser = currentUser ?: return
-
-//        navView.nav_textview_username.text = currentUser?.username
-
-
-
         imageview_main_logbook.setOnClickListener {
             val intent = Intent(this, LogbookActivity::class.java)
             startActivity(intent)
@@ -93,12 +83,24 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             startActivity(intent)
         }
 
+        imageview_main_schedule.setOnClickListener {
+            val intent = Intent(this, ScheduleActivity::class.java)
+            startActivity(intent)
+        }
+
     }
    override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
+            R.id.nav_mainscreen -> {
+                val intent = Intent(this, MainScreenActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
 
             R.id.nav_avvikelser -> {
+                val intent = Intent(this, AvvikelserActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_messages_private -> {
                 val intent = Intent(this, MessagesActivity::class.java)
@@ -113,6 +115,18 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 val intent = Intent(this, BLagerActivity::class.java)
                 startActivity(intent)
             }
+            R.id.nav_logbook -> {
+                val intent = Intent(this,LogbookActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_vatutskott -> {
+                val intent = Intent(this,VatutskottActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_schedule -> {
+                val intent = Intent(this,ScheduleActivity::class.java)
+                startActivity(intent)
+            }
             R.id.nav_logout -> {
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent(this, RegisterActivity::class.java)
@@ -124,24 +138,6 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         return true
     }
 
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item?.itemId) {
-//
-//            R.id.menu_sign_out -> {
-//                FirebaseAuth.getInstance().signOut()
-//                val intent = Intent(this, RegisterActivity::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                startActivity(intent)
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
-
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.nav_menu_main, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
 
     private fun verifyUserIsLoggedIn() {
         val uid = FirebaseAuth.getInstance().uid

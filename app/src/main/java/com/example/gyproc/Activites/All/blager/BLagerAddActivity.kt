@@ -1,4 +1,4 @@
-package com.example.gyproc.blager
+package com.example.gyproc.Activites.All.blager
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
