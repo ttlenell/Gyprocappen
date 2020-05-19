@@ -26,10 +26,13 @@ import com.example.gyproc.views.ChatWallFromOthers
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.activity_chat_wall.*
 import kotlinx.android.synthetic.main.content_chatwall.*
+import kotlinx.android.synthetic.main.nav_header.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 
 
 class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -51,7 +54,6 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         recyclerview_chat_wall.adapter = adapter
 
-//        supportActionBar?.title = "Chattvägg"
         listenForMessage()
         fetchCurrentUser()
 
@@ -74,22 +76,20 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        Log.d(LogbookActivity.TAG, "onBackPressed Called")
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        Log.d(LogbookActivity.TAG, "onBackPressed Called")
 //        val setIntent = Intent(this, MainScreenActivity::class.java)
 //        startActivity(setIntent)
 //        onStop()
-        adapter.notifyDataSetChanged()
-        finish()
-
-        return
-    }
+//        finish()
+//
+//        return
+//    }
 
     override fun onResume() {
         super.onResume()
 
-        adapter.notifyDataSetChanged()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -141,8 +141,6 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         return true
     }
 
-
-
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
@@ -151,22 +149,21 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             override fun onDataChange(p0: DataSnapshot) {
                 currentUser = p0.getValue(User::class.java)
                 Log.d(TAG,"Current user ${currentUser?.username}")
+                Picasso.get().load(currentUser?.profileImageUrl).into(nav_userphoto)
+                navView.nav_textview_username.text = currentUser?.username
             }
             override fun onCancelled(p0: DatabaseError) {
 
             }
         })
     }
-
     lateinit var user : User
     lateinit var users : UserData
-
 
     private fun listenForMessage() {
         users = UserData()
 
-
-        val fromId = FirebaseAuth.getInstance().uid
+//        val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/user-wall-messages")
 
         ref.addChildEventListener(object : ChildEventListener {
@@ -177,37 +174,25 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 if (chatWall != null ) {
                     Log.d(TAG, chatWall.text)
 
-
                     if (chatWall.fromId == FirebaseAuth.getInstance().uid) {
-
-
-
                         user = currentUser!!
                         Log.d(TAG, "$currentUser")
                         adapter.add(ChatWallFrom(chatWall.text, user))
 
                         Log.d(TAG, "försöker lägga till från inloggad")
-
-
                     } else {
                         for (person in users.contacts) {
                             if(person.uid == chatWall.fromId) {
                                 user = person
-
-
-                                adapter.add(ChatWallFromOthers(chatWall.text,user)
-                                )
+                                adapter.add(ChatWallFromOthers(chatWall.text,user))
                                 Log.d(TAG, "försöker lägga till från andra")
 
-                            }
                         }
-
                     }
-
-
                 }
                 recyclerview_chat_wall.scrollToPosition(adapter.itemCount -1)
             }
+                }
 
             override fun onCancelled(p0: DatabaseError) {
             }

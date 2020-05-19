@@ -17,8 +17,16 @@ import com.example.gyproc.Activites.All.messages.MessagesActivity
 import com.example.gyproc.Activites.All.registerlogin.RegisterActivity
 import com.example.gyproc.Activites.All.schedule.ScheduleActivity
 import com.example.gyproc.R
+import com.example.gyproc.models.User
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.nav_header.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 
 class VatutskottActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -29,6 +37,8 @@ class VatutskottActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vatutskott)
+
+        fetchCurrentUser()
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -41,6 +51,22 @@ class VatutskottActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
+    }
+
+    private fun fetchCurrentUser() {
+        val uid = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+
+            override fun onDataChange(p0: DataSnapshot) {
+                MainScreenActivity.currentUser = p0.getValue(User::class.java)
+                Picasso.get().load(MainScreenActivity.currentUser?.profileImageUrl).into(nav_userphoto)
+                navView.nav_textview_username.text = MainScreenActivity.currentUser?.username
+            }
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

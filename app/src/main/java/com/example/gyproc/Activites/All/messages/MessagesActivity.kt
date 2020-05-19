@@ -26,10 +26,13 @@ import com.example.gyproc.views.LatestMessageRow
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.activity_messages.*
 import kotlinx.android.synthetic.main.content_messages.*
+import kotlinx.android.synthetic.main.nav_header.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 
 class MessagesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -178,6 +181,8 @@ class MessagesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             override fun onDataChange(p0: DataSnapshot) {
                 currentUser = p0.getValue(User::class.java)
                 Log.d("LatestMessages","Current user ${currentUser?.username}")
+                Picasso.get().load(MainScreenActivity.currentUser?.profileImageUrl).into(nav_userphoto)
+                navView.nav_textview_username.text = MainScreenActivity.currentUser?.username
             }
             override fun onCancelled(p0: DatabaseError) {
 

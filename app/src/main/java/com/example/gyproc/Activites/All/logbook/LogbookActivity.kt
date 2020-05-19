@@ -24,9 +24,12 @@ import com.example.gyproc.views.LogBookItems
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.content_logbook.*
+import kotlinx.android.synthetic.main.nav_header.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 
 class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -125,6 +128,7 @@ class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     override fun onBackPressed() {
         Log.d(TAG, "onBackPressed Called")
+        finish()
         val setIntent = Intent(this, MainScreenActivity::class.java)
 //        setIntent.addCategory(Intent.CATEGORY_HOME)
 //        setIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -143,7 +147,8 @@ class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
             override fun onDataChange(p0: DataSnapshot) {
                 currentUser = p0.getValue(User::class.java)
-//                Log.d(TAG,"Current user ${MainScreenActivity.currentUser?.username}")
+                Picasso.get().load(currentUser?.profileImageUrl).into(nav_userphoto)
+                navView.nav_textview_username.text = currentUser?.username
             }
             override fun onCancelled(p0: DatabaseError) {
 
@@ -157,10 +162,8 @@ class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
     fun listenForLogbookEntries() {
-
         users = UserData()
-
-        val fromId = FirebaseAuth.getInstance().uid
+//        val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/logbook-entries/")
 
         ref.addChildEventListener(object : ChildEventListener {
@@ -181,16 +184,15 @@ class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
                         Log.d(TAG, "Current user ${MainScreenActivity.currentUser?.username}")
                         adapter.add(LogBookItems(logBook.text, user, shift, timeCreated))
-                        Log.d(TAG, "försöker lägga till i adapter")
+                        Log.d(TAG, "lägg till från inloggad user")
                     } else {
                         for (person in users.contacts) {
                             if(person.uid == logBook.fromId) {
                                 user = person
 
-
-
                                 adapter.add(LogBookItems(logBook.text,
                                     user, shift,timeCreated))
+                                Log.d(TAG, "Lägg till från andra users")
 
                             }
                         }
