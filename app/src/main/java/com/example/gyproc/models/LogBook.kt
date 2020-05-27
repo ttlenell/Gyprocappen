@@ -7,6 +7,7 @@ class LogBook(val id : String = "",
               val fromId : String = "",
               val shift : String = "",
               val team : String ="",
-                val dateToFirebase : String = "")
+              val dateToFirebase : String = "",
+              val timestamp : Long = -1)
                {
 }

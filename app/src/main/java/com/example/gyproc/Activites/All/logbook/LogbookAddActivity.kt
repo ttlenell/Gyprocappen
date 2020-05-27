@@ -10,6 +10,7 @@ import com.example.gyproc.R
 import com.example.gyproc.models.LogBook
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_logbook_add.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,7 +19,6 @@ class LogbookAddActivity : AppCompatActivity() {
 
     companion object {
         val TAG = "LogbookAdd"
-        val USER_KEY = "USER_KEY"
 
     }
 
@@ -116,6 +116,7 @@ class LogbookAddActivity : AppCompatActivity() {
         val team = logbook_team_chooser.text.toString()
 
 
+
         val calendar = Calendar.getInstance()
         val date : Date = calendar.time
 
@@ -133,7 +134,8 @@ class LogbookAddActivity : AppCompatActivity() {
         val reference = FirebaseDatabase.getInstance()
             .getReference("/logbook-entries").push()
 
-        val logBookEntry = LogBook(reference.key!!, text, fromId, shift,team, dateToFirebase)
+        val logBookEntry = LogBook(reference.key!!, text, fromId, shift,team, dateToFirebase,
+            System.currentTimeMillis() / 1000)
 
         reference.setValue(logBookEntry)
             .addOnSuccessListener {
