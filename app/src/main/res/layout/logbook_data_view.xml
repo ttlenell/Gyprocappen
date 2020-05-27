@@ -42,7 +42,8 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_logbook_time" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_logbook_time"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView_logbook_time"
@@ -63,5 +64,16 @@
         app:layout_constraintBottom_toTopOf="@+id/imageview_logbook_user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_logbook_team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/team"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_logbook_shift"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_logbook_time" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,8 @@ import java.util.*
 class ChatWall(
     val id: String = "",
     val text: String = "",
-    val fromId: String = ""
+    val fromId: String = "",
+    val timestamp: String = ""
 ) {
 
 

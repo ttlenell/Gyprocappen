@@ -4,7 +4,7 @@
     <group>
         <item
             android:id="@+id/nav_mainscreen"
-            android:icon="@drawable/ic_messages_wall"
+            android:icon="@drawable/ic_mainscreen"
             android:title="@string/mainScreen"/>
         <item
             android:id="@+id/nav_avvikelser"
@@ -28,23 +28,23 @@
             android:title="@string/chatPrivate"/>
         <item
             android:id="@+id/nav_logbook"
-            android:icon="@drawable/ic_messages_wall"
+            android:icon="@drawable/ic_logbook"
             android:title="@string/logBook"/>
         <item
             android:id="@+id/nav_schedule"
-            android:icon="@drawable/ic_messages_wall"
+            android:icon="@drawable/ic_scheduele"
             android:title="@string/schedule"/>
 
 
     </group>
 
-    <item android:title="Account Settings">
+    <item android:title="@string/account">
         <menu>
 
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_signout"
-                android:title="Sign Out"/>
+                android:title="@string/signOut" />
         </menu>
     </item>
 </menu>

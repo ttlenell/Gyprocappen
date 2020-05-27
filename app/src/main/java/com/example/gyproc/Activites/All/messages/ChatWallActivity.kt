@@ -33,6 +33,8 @@ import kotlinx.android.synthetic.main.activity_chat_wall.*
 import kotlinx.android.synthetic.main.content_chatwall.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.nav_header.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -141,6 +143,12 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         return true
     }
 
+    val calendar = Calendar.getInstance()
+    val date : Date = calendar.time
+
+    val dateFormat = SimpleDateFormat("E dd-MMM HH:mm")
+    val dateToFirebase = dateFormat.format(date)
+
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
@@ -170,6 +178,7 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatWall = p0.getValue((ChatWall::class.java))
+                val timeCreated = chatWall!!.timestamp
 
                 if (chatWall != null ) {
                     Log.d(TAG, chatWall.text)
@@ -177,14 +186,14 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     if (chatWall.fromId == FirebaseAuth.getInstance().uid) {
                         user = currentUser!!
                         Log.d(TAG, "$currentUser")
-                        adapter.add(ChatWallFrom(chatWall.text, user))
+                        adapter.add(ChatWallFrom(chatWall.text, user, timeCreated))
 
                         Log.d(TAG, "försöker lägga till från inloggad")
                     } else {
                         for (person in users.contacts) {
                             if(person.uid == chatWall.fromId) {
                                 user = person
-                                adapter.add(ChatWallFromOthers(chatWall.text,user))
+                                adapter.add(ChatWallFromOthers(chatWall.text,user,timeCreated))
                                 Log.d(TAG, "försöker lägga till från andra")
 
                         }
@@ -218,7 +227,7 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             .getReference("/user-wall-messages").push()
 
 
-        val chatWall = ChatWall(reference.key!!, text, fromId)
+        val chatWall = ChatWall(reference.key!!, text, fromId, dateToFirebase)
 
         reference.setValue(chatWall)
             .addOnSuccessListener {

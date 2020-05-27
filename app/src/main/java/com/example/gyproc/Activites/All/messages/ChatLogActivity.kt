@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.activity_chat_log.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_chat_log.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -79,6 +80,14 @@ class ChatLogActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         send_button_chat.setOnClickListener {
             Log.d(TAG, "Hej")
             performSendMessage()
+        }
+
+        choose_image_chat.setOnClickListener {
+            Log.d("Main","Try to show photo selector")
+
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent,0)
         }
 
     }

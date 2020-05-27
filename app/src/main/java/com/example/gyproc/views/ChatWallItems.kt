@@ -10,10 +10,11 @@ import kotlinx.android.synthetic.main.chatwall_from_others_row.view.*
 import kotlinx.android.synthetic.main.chatwall_from_row.view.*
 import java.text.SimpleDateFormat
 
-class ChatWallFrom(val text: String, val user: User): Item<GroupieViewHolder>() {
+class ChatWallFrom(val text: String, val user: User, private val timestamp: String): Item<GroupieViewHolder>() {
 
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        viewHolder.itemView.timeView_chatwall_from_row.text = timestamp
         viewHolder.itemView.textview_chatwall_from_row.text = text
         viewHolder.itemView.username_textview_chatwall_from_row.text = user.username
 
@@ -30,11 +31,12 @@ class ChatWallFrom(val text: String, val user: User): Item<GroupieViewHolder>() 
     }
 }
 
-class ChatWallFromOthers(val text: String, val user: User) : Item<GroupieViewHolder>() {
+class ChatWallFromOthers(val text: String, val user: User, private val timestamp : String) :
+    Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
 
         viewHolder.itemView.textView_chatwall_from_others_row.text = text
-
+        viewHolder.itemView.timeView_chatwall_from_others_row.text = timestamp
         viewHolder.itemView.username_textview_chatwall_from_others_row.text = user.username
 
         val uri = user.profileImageUrl

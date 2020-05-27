@@ -39,17 +39,32 @@
         android:text="@string/logBookAddInfo"
         app:layout_constraintBottom_toTopOf="@+id/logbook_add_edittext"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.153" />
 
     <Button
         android:id="@+id/logbook_shift_chooser"
         android:layout_width="wrap_content"
-        android:background="@drawable/rounded_button"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
         android:text="@string/shift"
         app:layout_constraintBottom_toTopOf="@+id/logbook_add_edittext"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logbook_add_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/logbook_add_textview"
+        app:layout_constraintVertical_bias="0.203" />
+
+    <Button
+        android:id="@+id/logbook_team_chooser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:text="@string/team"
+        app:layout_constraintBottom_toTopOf="@+id/logbook_add_edittext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logbook_shift_chooser" />
 </androidx.constraintlayout.widget.ConstraintLayout>

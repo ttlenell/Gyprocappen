@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -37,159 +38,146 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-            <ImageView
-                android:id="@+id/imageview_main_logbook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                app:layout_constraintEnd_toStartOf="@+id/imageview_main_schedule"
-                app:layout_constraintStart_toEndOf="@+id/imageview_main_chatwall"
-                app:layout_constraintTop_toBottomOf="@+id/imageview_main_blager"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
 
-            <ImageView
-                android:id="@+id/imageview_main_vatutskott"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
-                android:layout_marginEnd="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+        <ImageView
+            android:id="@+id/aimageview_main_avvikelser"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_avvikelser" />
+
+        <TextView
+            android:id="@+id/textview_main_avvikelser"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:text="Avvikelser"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/aimageview_main_avvikelser" />
+
+        <ImageView
+            android:id="@+id/imageview_main_logbook"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_main_private_chat"
+            app:srcCompat="@drawable/ic_logbook" />
+
+        <ImageView
+            android:id="@+id/imageview_main_vatutskott"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_main_blager"
+            app:srcCompat="@drawable/ic_vatutskott" />
 
         <ImageView
             android:id="@+id/imageview_main_chatwall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="100dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/aimageview_main_avvikelser"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            app:layout_constraintTop_toBottomOf="@+id/textview_main_vatutskott"
+            app:srcCompat="@drawable/ic_messages_wall" />
 
-            <ImageView
-                android:id="@+id/aimageview_main_avvikelser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="200dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
 
-            <ImageView
-                android:id="@+id/imageview_main_blager"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
-                app:layout_constraintEnd_toStartOf="@+id/imageview_main_vatutskott"
-                app:layout_constraintStart_toEndOf="@+id/aimageview_main_avvikelser"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+        <ImageView
+            android:id="@+id/imageview_main_blager"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_main_avvikelser"
+            app:srcCompat="@drawable/ic_folder" />
 
-            <ImageView
-                android:id="@+id/imageview_main_schedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:layout_marginEnd="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageview_main_vatutskott"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+        <ImageView
+            android:id="@+id/imageview_main_schedule"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_main_logbook"
+            app:srcCompat="@drawable/ic_scheduele" />
 
-            <TextView
-                android:id="@+id/textview_main_avvikelser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="60dp"
-                android:text="Avvikelser"
-                app:layout_constraintBottom_toTopOf="@+id/imageview_main_chatwall"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/aimageview_main_avvikelser" />
 
-            <TextView
-                android:id="@+id/textview_main_blager"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="60dp"
-                android:text="B-Lager"
-                app:layout_constraintBottom_toTopOf="@+id/imageview_main_logbook"
-                app:layout_constraintEnd_toStartOf="@+id/textview_main_vatutskott"
-                app:layout_constraintHorizontal_bias="0.507"
-                app:layout_constraintStart_toEndOf="@+id/textview_main_avvikelser"
-                app:layout_constraintTop_toBottomOf="@+id/imageview_main_blager"
-                app:layout_constraintVertical_bias="0.384" />
+        <TextView
+            android:id="@+id/textview_main_blager"
+            android:layout_width="55dp"
+            android:layout_height="18dp"
+            android:text="B-Lager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageview_main_blager" />
 
-            <TextView
-                android:id="@+id/textview_main_vatutskott"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="60dp"
-                android:text="Våtutskott"
-                app:layout_constraintBottom_toTopOf="@+id/imageview_main_schedule"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageview_main_vatutskott" />
+        <TextView
+            android:id="@+id/textview_main_vatutskott"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:text="Våtutskott"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageview_main_vatutskott" />
 
-            <TextView
-                android:id="@+id/textview_main_chatwall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="30dp"
-                android:text="Chattvägg"
-                app:layout_constraintBottom_toTopOf="@+id/textview_main_logbook"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageview_main_chatwall" />
+        <TextView
+            android:id="@+id/textview_main_chatwall"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:text="Chattvägg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageview_main_chatwall" />
 
-            <TextView
-                android:id="@+id/textview_main_logbook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="50dp"
-                android:text="Loggbok"
-                app:layout_constraintBottom_toTopOf="@+id/imageview_main_private_chat"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageview_main_logbook" />
+        <TextView
+            android:id="@+id/textview_main_logbook"
+            android:layout_width="59dp"
+            android:layout_height="20dp"
+            android:text="Loggbok"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageview_main_logbook" />
 
-            <TextView
-                android:id="@+id/textview_main_schedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
-                android:text="Schema"
-                app:layout_constraintBottom_toTopOf="@+id/textview_main_logbook"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageview_main_schedule" />
+        <TextView
+            android:id="@+id/textview_main_schedule"
+            android:layout_width="54dp"
+            android:layout_height="17dp"
+            android:layout_marginBottom="75dp"
+            android:text="Schema"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageview_main_schedule" />
 
-            <ImageView
-                android:id="@+id/imageview_main_private_chat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="110dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageview_main_logbook"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+        <ImageView
+            android:id="@+id/imageview_main_private_chat"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_main_chatwall"
+            app:srcCompat="@drawable/ic_messages_private" />
 
-            <TextView
-                android:id="@+id/textview_main_private_chat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="200dp"
-                android:text="Privat chatt"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageview_main_private_chat" />
+        <TextView
+            android:id="@+id/textview_main_private_chat"
+            android:layout_width="81dp"
+            android:layout_height="22dp"
+            android:text="Privat chatt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageview_main_private_chat" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </LinearLayout>

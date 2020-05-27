@@ -29,7 +29,11 @@ class LogbookAddActivity : AppCompatActivity() {
         supportActionBar?.title = "Ny logg"
 
         logbook_shift_chooser.setOnClickListener {
-            showDialog()
+            showDialogShift()
+        }
+
+        logbook_team_chooser.setOnClickListener {
+            showDialogTeam()
         }
 
         logbook_add_save_button.setOnClickListener {
@@ -41,8 +45,7 @@ class LogbookAddActivity : AppCompatActivity() {
 
     }
 
-    private fun showDialog() {
-
+    private fun showDialogShift() {
 
             // Late initialize an alert dialog object
             lateinit var dialog: AlertDialog
@@ -74,12 +77,43 @@ class LogbookAddActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    private fun showDialogTeam() {
+
+        // Late initialize an alert dialog object
+        lateinit var dialog: AlertDialog
+
+        // Initialize an array of colors
+        val arrayTeams = arrayOf("A", "B", "C", "D", "E")
+
+        // Initialize a new instance of alert dialog builder object
+        val builder = AlertDialog.Builder(this)
+
+        // Set a title for alert dialog
+        builder.setTitle("Välj skiftlag")
+
+
+        builder.setSingleChoiceItems(arrayTeams,-1) { _, which ->
+            // Get the dialog selected item
+            val team = arrayTeams[which]
+            toast("$team skiftlag valt")
+            logbook_team_chooser.text = team
+
+            dialog.dismiss()
+        }
+
+        dialog = builder.create()
+
+        dialog.show()
+    }
+
+
 
     fun addToLogbook() {
 
         val fromId = FirebaseAuth.getInstance().uid ?: return
         val text = logbook_add_edittext.text.toString()
         val shift = logbook_shift_chooser.text.toString()
+        val team = logbook_team_chooser.text.toString()
 
 
         val calendar = Calendar.getInstance()
@@ -93,17 +127,18 @@ class LogbookAddActivity : AppCompatActivity() {
         Log.d(TAG,"$date sparad")
         Log.d(TAG,"$shift sparad")
         Log.d(TAG,"$text sparad")
+        Log.d(TAG,"$team sparad")
 
 
         val reference = FirebaseDatabase.getInstance()
             .getReference("/logbook-entries").push()
 
-        val logBookEntry = LogBook(reference.key!!, text, fromId, shift, dateToFirebase)
+        val logBookEntry = LogBook(reference.key!!, text, fromId, shift,team, dateToFirebase)
 
         reference.setValue(logBookEntry)
             .addOnSuccessListener {
                 Log.d(TAG, "Sparade logboksinlägg ${reference.key}")
-                Log.d(TAG,"shift = $shift, text = $text, fromId = $fromId")
+                Log.d(TAG,"shift = $shift, text = $text, fromId = $fromId, team = $team")
                 logbook_add_edittext.text.clear()
             }
 

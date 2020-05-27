@@ -163,18 +163,24 @@ class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     fun listenForLogbookEntries() {
         users = UserData()
+
 //        val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/logbook-entries/")
 
-        ref.addChildEventListener(object : ChildEventListener {
 
+
+        ref.addChildEventListener(object : ChildEventListener {
+//            ref.orderByChild(timeCreated)
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+
+
                 val logBook = p0.getValue(LogBook::class.java)
                 if (logBook != null) {
                     Log.d(TAG, logBook.text)
-                    val shift = logBook.shift
-                    val timeCreated = logBook.dateToFirebase
 
+                    val shift = logBook.shift
+                    val team = logBook.team
+                    val timeCreated = logBook.dateToFirebase
 
                     if (logBook.fromId == FirebaseAuth.getInstance().uid) {
 
@@ -183,7 +189,8 @@ class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
                         Log.d(TAG, "Current user ${MainScreenActivity.currentUser?.username}")
-                        adapter.add(LogBookItems(logBook.text, user, shift, timeCreated))
+
+                        adapter.add(LogBookItems(logBook.text, user, shift, team, timeCreated))
                         Log.d(TAG, "lägg till från inloggad user")
                     } else {
                         for (person in users.contacts) {
@@ -191,7 +198,7 @@ class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                                 user = person
 
                                 adapter.add(LogBookItems(logBook.text,
-                                    user, shift,timeCreated))
+                                    user, shift,team,timeCreated))
                                 Log.d(TAG, "Lägg till från andra users")
 
                             }
