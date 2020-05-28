@@ -2,7 +2,7 @@ package com.example.gyproc.models
 
 import java.util.*
 
-class ChatWall(
+class ChatWallMessage(
     val id: String = "",
     val text: String = "",
     val fromId: String = "",

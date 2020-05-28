@@ -18,7 +18,7 @@ import com.example.gyproc.Activites.All.mainscreen.MainScreenActivity.Companion.
 import com.example.gyproc.Activites.All.registerlogin.RegisterActivity
 import com.example.gyproc.Activites.All.schedule.ScheduleActivity
 import com.example.gyproc.Activites.All.vatutskott.VatutskottActivity
-import com.example.gyproc.models.ChatWall
+import com.example.gyproc.models.ChatWallMessage
 import com.example.gyproc.models.User
 import com.example.gyproc.models.UserData
 import com.example.gyproc.views.ChatWallFrom
@@ -29,7 +29,6 @@ import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import kotlinx.android.synthetic.main.activity_chat_wall.*
 import kotlinx.android.synthetic.main.content_chatwall.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.nav_header.view.*
@@ -166,10 +165,10 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         })
     }
     lateinit var user : User
-    lateinit var users : UserData
+//    lateinit var users : UserData
 
     private fun listenForMessage() {
-        users = UserData()
+//        users = UserData()
 
 //        val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/user-wall-messages")
@@ -177,7 +176,7 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         ref.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                val chatWall = p0.getValue((ChatWall::class.java))
+                val chatWall = p0.getValue((ChatWallMessage::class.java))
                 val timeCreated = chatWall!!.timestamp
 
                 if (chatWall != null ) {
@@ -190,7 +189,7 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
                         Log.d(TAG, "försöker lägga till från inloggad")
                     } else {
-                        for (person in users.contacts) {
+                        for (person in UserData.contacts) {
                             if(person.uid == chatWall.fromId) {
                                 user = person
                                 adapter.add(ChatWallFromOthers(chatWall.text,user,timeCreated))
@@ -227,7 +226,7 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             .getReference("/user-wall-messages").push()
 
 
-        val chatWall = ChatWall(reference.key!!, text, fromId, dateToFirebase)
+        val chatWall = ChatWallMessage(reference.key!!, text, fromId, dateToFirebase)
 
         reference.setValue(chatWall)
             .addOnSuccessListener {

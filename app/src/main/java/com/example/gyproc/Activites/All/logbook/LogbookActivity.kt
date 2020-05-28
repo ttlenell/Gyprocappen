@@ -157,14 +157,14 @@ class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     lateinit var user: User
-    lateinit var users : UserData
+//    lateinit var users : UserData
 
 
 
     fun listenForLogbookEntries() {
-        users = UserData()
+//        users = UserData()
 
-        Log.d("HEJ", users.toString())
+        Log.d("HEJ", UserData.contacts.toString())
 //        val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/logbook-entries/")
 
@@ -194,7 +194,7 @@ class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         adapter.add(LogBookItems(logBook.text, user, shift, team, timeCreated))
                         Log.d(TAG, "lägg till från inloggad user")
                     } else {
-                        for (person in users.contacts) {
+                        for (person in UserData.contacts) {
                             Log.d("HEJ1", person.username)
                             if(person.uid == logBook.fromId) {
                                 user = person
