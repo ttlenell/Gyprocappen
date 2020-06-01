@@ -135,7 +135,7 @@ class LogbookAddActivity : AppCompatActivity() {
             .getReference("/logbook-entries").push()
 
         val logBookEntry = LogBook(reference.key!!, text, fromId, shift,team, dateToFirebase,
-            System.currentTimeMillis() / 1000)
+            System.currentTimeMillis())
 
         reference.setValue(logBookEntry)
             .addOnSuccessListener {

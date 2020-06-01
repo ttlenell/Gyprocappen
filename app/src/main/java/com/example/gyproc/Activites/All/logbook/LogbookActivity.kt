@@ -170,7 +170,8 @@ class LogbookActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
 
-        ref.orderByChild("timestamp").addChildEventListener(object : ChildEventListener {
+        ref.orderByChild("timestamp").addChildEventListener(object :
+            ChildEventListener {
 //            ref.orderByChild(timeCreated)
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
 

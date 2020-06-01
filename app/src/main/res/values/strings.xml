@@ -22,4 +22,5 @@
     <string name="newMessage">Nytt meddelande</string>
     <string name="account">Konto</string>
     <string name="time">Tid</string>
+    <string name="amount">Antal</string>
 </resources>

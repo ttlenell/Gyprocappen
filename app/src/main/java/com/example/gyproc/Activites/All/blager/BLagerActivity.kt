@@ -3,6 +3,7 @@ package com.example.gyproc.Activites.All.blager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -10,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.gyproc.Activites.All.avvikelser.AvvikelserActivity
 import com.example.gyproc.Activites.All.logbook.LogbookActivity
+import com.example.gyproc.Activites.All.logbook.LogbookActivity.Companion.TAG
 import com.example.gyproc.Activites.All.mainscreen.MainScreenActivity
 import com.example.gyproc.Activites.All.messages.ChatWallActivity
 import com.example.gyproc.Activites.All.messages.MessagesActivity
@@ -17,19 +19,29 @@ import com.example.gyproc.Activites.All.registerlogin.RegisterActivity
 import com.example.gyproc.Activites.All.schedule.ScheduleActivity
 import com.example.gyproc.Activites.All.vatutskott.VatutskottActivity
 import com.example.gyproc.R
+import com.example.gyproc.models.BLager
+import com.example.gyproc.models.LogBook
 import com.example.gyproc.models.User
+import com.example.gyproc.models.UserData
+import com.example.gyproc.views.BLagerItems
+import com.example.gyproc.views.LogBookItems
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.content_logbook.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.nav_header.view.*
 
 class BLagerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    companion object {
+        val TAG = "B-Lager entries"
+    }
+
+    val adapter = GroupAdapter<GroupieViewHolder>()
 
     lateinit var toolbar: Toolbar
     lateinit var drawerLayout: DrawerLayout
@@ -40,6 +52,8 @@ class BLagerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         setContentView(R.layout.activity_b_lager)
 
         fetchCurrentUser()
+        listenForBLagerEntries()
+        recyclerview_data_posts.adapter = adapter
 
 
         fab_add_post.setOnClickListener {
@@ -125,5 +139,80 @@ class BLagerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    lateinit var user: User
+//    lateinit var users : UserData
+
+
+
+    fun listenForBLagerEntries() {
+//        users = UserData()
+
+        Log.d("HEJ", UserData.contacts.toString())
+//        val fromId = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/b_lager-entries/")
+
+
+
+        ref.orderByChild("timestamp").addChildEventListener(object : ChildEventListener {
+            //            ref.orderByChild(timeCreated)
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+
+
+                val bLager = p0.getValue(BLager::class.java)
+                if (bLager != null) {
+                    Log.d(TAG, bLager.text)
+
+                    val team = bLager.team
+                    val timeCreated = bLager.dateToFireBase
+                    val product = bLager.product
+                    val amount = bLager.amount
+
+                    if (bLager.fromId == FirebaseAuth.getInstance().uid) {
+
+                        val currentUser = MainScreenActivity.currentUser ?: return
+                        user = currentUser
+
+
+                        Log.d(TAG, "Current user ${MainScreenActivity.currentUser?.username}")
+
+                        adapter.add(BLagerItems(bLager.text, user, team,product, amount, timeCreated))
+                        Log.d(TAG, "lägg till från inloggad user")
+                    } else {
+                        for (person in UserData.contacts) {
+                            Log.d("HEJ1", person.username)
+                            if(person.uid == bLager.fromId) {
+                                user = person
+                                Log.d("HEJ2", user.username)
+
+                                adapter.add(
+                                    BLagerItems(bLager.text,
+                                    user,team,timeCreated,product,amount)
+                                )
+                                Log.d(TAG, "Lägg till från andra users")
+
+                            }
+                        }
+                    }
+                }
+//                recyclerview_data_posts.scrollToPosition(adapter.itemCount -1)
+
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+            }
+
+        })
+
     }
 }

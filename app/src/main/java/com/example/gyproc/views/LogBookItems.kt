@@ -5,14 +5,11 @@ import com.example.gyproc.models.User
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
-
 import kotlinx.android.synthetic.main.logbook_data_view.view.*
-import java.util.*
 
 class LogBookItems(val text: String, val user: User, private val team : String, private val shiftView :
 String, val
-dateToFirebase : String) :
-    Item<GroupieViewHolder>() {
+dateToFirebase : String) : Item<GroupieViewHolder>() {
 //
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.textView_logbook_username.text = user.username
