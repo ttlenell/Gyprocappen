@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -48,6 +49,11 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
         verifyUserIsLoggedIn()
         fetchCurrentUser()
+
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+
+        // koden för actionbar och hamburgarmeny
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -138,6 +144,7 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         return true
     }
 
+    // kontroller att en användare är inloggad, annars skicka tillbaka till RegisterActivity
 
     private fun verifyUserIsLoggedIn() {
         val uid = FirebaseAuth.getInstance().uid
@@ -147,6 +154,8 @@ class MainScreenActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             startActivity(intent)
         }
     }
+
+    // hämta den inloggade userns uppgifter
 
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid

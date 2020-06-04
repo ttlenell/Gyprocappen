@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -48,11 +49,17 @@ class MessagesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_messages)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         recycler_latest_messages.adapter = adapter
 
+
+        // sätter in vertikala linjer mellan varje inlägg
+
         recycler_latest_messages.addItemDecoration(DividerItemDecoration(this,
             DividerItemDecoration.VERTICAL))
+
+        // koden för actionbar och hamburgarmeny
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -132,6 +139,7 @@ class MessagesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     }
 
 
+    // se senaste meddelandet innan man går in i chatten
 
     val latestMessageMap = HashMap<String, ChatMessage>()
 
@@ -141,6 +149,8 @@ class MessagesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             adapter.add(LatestMessageRow(it))
         }
     }
+
+    // hämta hem meddelanden från firebasee
 
     private fun listenforLatestMessages() {
         val fromId = FirebaseAuth.getInstance().uid
@@ -172,6 +182,7 @@ class MessagesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     }
     val adapter = GroupAdapter<GroupieViewHolder>()
 
+    // kolla vilken user som är inloggad
 
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid

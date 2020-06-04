@@ -1,14 +1,20 @@
 package com.example.gyproc.Activites.All.messages
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.example.gyproc.Activites.All.avvikelser.AvvikelserActivity
 import com.example.gyproc.Activites.All.blager.BLagerActivity
 import com.example.gyproc.Activites.All.logbook.LogbookActivity
@@ -57,11 +63,15 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         listenForMessage()
         fetchCurrentUser()
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+
 
         send_button_chat_wall.setOnClickListener {
             Log.d(TAG, "Försöker skicka meddelande")
             performSendMessage()
         }
+
+        // koden för actionbar och hamburgarmeny
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -77,21 +87,8 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     }
 
-//    override fun onBackPressed() {
-//        super.onBackPressed()
-//        Log.d(LogbookActivity.TAG, "onBackPressed Called")
-//        val setIntent = Intent(this, MainScreenActivity::class.java)
-//        startActivity(setIntent)
-//        onStop()
-//        finish()
-//
-//        return
-//    }
 
-    override fun onResume() {
-        super.onResume()
 
-    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -164,27 +161,31 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
         })
     }
+
+
+
     lateinit var user : User
-//    lateinit var users : UserData
 
     private fun listenForMessage() {
-//        users = UserData()
 
-//        val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/user-wall-messages")
 
         ref.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatWall = p0.getValue((ChatWallMessage::class.java))
-                val timeCreated = chatWall!!.timestamp
+
 
                 if (chatWall != null ) {
                     Log.d(TAG, chatWall.text)
+                    val timeCreated = chatWall.dateToFirebase
 
                     if (chatWall.fromId == FirebaseAuth.getInstance().uid) {
-                        user = currentUser!!
+
+                        val currentUser = currentUser ?: return
+                        user = currentUser
                         Log.d(TAG, "$currentUser")
+
                         adapter.add(ChatWallFrom(chatWall.text, user, timeCreated))
 
                         Log.d(TAG, "försöker lägga till från inloggad")
@@ -198,6 +199,7 @@ class ChatWallActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                         }
                     }
                 }
+                    // scrollar till längst ner av alla meddelanden vid start av aktivitet
                 recyclerview_chat_wall.scrollToPosition(adapter.itemCount -1)
             }
                 }

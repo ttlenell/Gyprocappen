@@ -36,12 +36,5 @@ object UserData {
         })
     }
 
-//    fun downloadFromFirebase(onComplete : (value : String) -> Unit) {
-//        db.collectionpath("users").get().addOnSucessListener {
-//            if(result = null) {
-//                onComplete.invoke("hej")
-//            }
-//        }
-//    }
 }
 

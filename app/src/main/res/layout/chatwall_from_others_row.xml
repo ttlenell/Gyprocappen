@@ -5,18 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp">>
+    android:layout_marginBottom="12dp"><![CDATA[>
+
+
+
+    ]]>
 
     <TextView
         android:id="@+id/timeView_chatwall_from_others_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:text="tid"
-        android:textSize="10sp"
+        android:layout_marginStart="32dp"
+        android:text="@string/time"
+        android:textSize="12sp"
+        android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/textView_chatwall_from_others_row"
-        app:layout_constraintEnd_toEndOf="@+id/textView_chatwall_from_others_row"
-        app:layout_constraintStart_toStartOf="@+id/textView_chatwall_from_others_row"
+        app:layout_constraintStart_toEndOf="@+id/username_textview_chatwall_from_others_row"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -24,7 +28,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="user "
+        android:text="@string/username"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,9 +40,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:background="@drawable/rounded_edittext_register_login"
+        android:fontFamily="@font/proza_libre"
         android:maxWidth="240dp"
         android:padding="16dp"
         android:text="this is my message"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toEndOf="@+id/imageview_chatwall_from_others_row"
         app:layout_constraintTop_toTopOf="@id/imageview_chatwall_from_others_row" />
 

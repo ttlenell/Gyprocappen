@@ -6,7 +6,7 @@ class ChatWallMessage(
     val id: String = "",
     val text: String = "",
     val fromId: String = "",
-    val timestamp: String = ""
+    val dateToFirebase: String = ""
 ) {
 
 

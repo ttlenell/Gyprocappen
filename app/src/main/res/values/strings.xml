@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">Gyproc</string>
     <string name="username">användarnamn</string>
-    <string name="send">Skicka</string>
+    <string name="email">e-postadress</string>
     <string name="password">lösenord</string>
+    <string name="backToReg">Tillbaka till Registrering</string>
+    <string name="login">Logga in</string>
+    <string name="register">REGISTRERA</string>
+    <string name="choosePicture">Välj bild</string>
+    <string name="alreadyHaveAccount">Har du redan ett konto?</string>
+    <string name="send">Skicka</string>
     <string name="writeSomething">Skriv något</string>
     <string name="logBookAddInfo">Välj pass och sen fyll i texten. Avsluta med spara</string>
-    <string name="bLagerAddInfo">Välj produkt och fyll i anledning. Avsluta med spara</string>
+    <string name="bLagerAddInfo">Välj produkt och fyll i anledning samt skriv antal nedanför. Avsluta med spara</string>
     <string name="saveButton">SPARA</string>
     <string name="shift">Arbetspass</string>
     <string name="team">Skiftlag</string>
@@ -23,4 +29,6 @@
     <string name="account">Konto</string>
     <string name="time">Tid</string>
     <string name="amount">Antal</string>
+    <string name="date">Datum</string>
+    <string name="st">st</string>
 </resources>

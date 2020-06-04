@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.example.gyproc.R
 import com.example.gyproc.Activites.All.messages.MessagesActivity.Companion.currentUser
 import com.example.gyproc.models.User
@@ -30,6 +31,7 @@ class NewMessageActivity : AppCompatActivity() {
 
 
         recyclerview_newmessage.adapter = adapter
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         fetchUsers()
     }
@@ -37,6 +39,9 @@ class NewMessageActivity : AppCompatActivity() {
     companion object {
         val USER_KEY = "USER_KEY"
     }
+
+    // hämta alla tillgängliga users
+
     private fun fetchUsers() {
       val ref = FirebaseDatabase.getInstance().getReference("/users")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {

@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.gyproc.Activites.All.avvikelser.AvvikelserActivity
 import com.example.gyproc.Activites.All.logbook.LogbookActivity
 import com.example.gyproc.Activites.All.logbook.LogbookActivity.Companion.TAG
@@ -50,6 +52,16 @@ class BLagerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_b_lager)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+            // sätter in vertikala linjer mellan varje inlägg
+
+            recyclerview_data_posts.addItemDecoration(
+            DividerItemDecoration(
+                this, DividerItemDecoration
+                    .VERTICAL
+            )
+        )
 
         fetchCurrentUser()
         listenForBLagerEntries()
@@ -63,6 +75,9 @@ class BLagerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 BLagerAddActivity::class.java)
             startActivity(intent)
         }
+
+        // koden för actionbar och hamburgarmeny
+
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 

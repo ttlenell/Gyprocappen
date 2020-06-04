@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.gyproc.R
@@ -26,6 +27,9 @@ class LogbookAddActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logbook_add)
 
+
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
         supportActionBar?.title = "Ny logg"
 
         logbook_shift_chooser.setOnClickListener {
@@ -44,6 +48,8 @@ class LogbookAddActivity : AppCompatActivity() {
 
 
     }
+
+    // visar alertdialog där man väljer vilket arbetspass man jobbat på
 
     private fun showDialogShift() {
 
@@ -77,6 +83,8 @@ class LogbookAddActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    // alertdialog där man väljer vilket skiftlag man jobbat på
+
     private fun showDialogTeam() {
 
         // Late initialize an alert dialog object
@@ -107,6 +115,7 @@ class LogbookAddActivity : AppCompatActivity() {
     }
 
 
+    // skickar till firebase
 
     fun addToLogbook() {
 
@@ -135,7 +144,7 @@ class LogbookAddActivity : AppCompatActivity() {
             .getReference("/logbook-entries").push()
 
         val logBookEntry = LogBook(reference.key!!, text, fromId, shift,team, dateToFirebase,
-            System.currentTimeMillis())
+            System.currentTimeMillis() * 1000)
 
         reference.setValue(logBookEntry)
             .addOnSuccessListener {

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -54,6 +55,7 @@ class ChatLogActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
 
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         recyclerview_chat.adapter = adapter
 
@@ -64,8 +66,12 @@ class ChatLogActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         listenForMessage()
 
+        // koden för actionbar och hamburgarmeny
+
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        toolbar.title = toUser?.username
+
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
@@ -141,12 +147,15 @@ class ChatLogActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         return true
     }
 
+    // kodblock för att visa när ett meddelande har skickat
+
     val calendar = Calendar.getInstance()
     val date : Date = calendar.time
 
     val dateFormat = SimpleDateFormat("E dd-MMM HH:mm")
     val dateToFirebase = dateFormat.format(date)
 
+    // hämta privata meddelanden från firebase
 
     private fun listenForMessage() {
         val fromId = FirebaseAuth.getInstance().uid
@@ -189,7 +198,7 @@ class ChatLogActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         })
     }
 
-
+    // skickar meddelanden till firebase
 
 
     private fun performSendMessage() {
@@ -221,6 +230,8 @@ class ChatLogActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 recyclerview_chat.scrollToPosition(adapter.itemCount -1)
             }
         toReference.setValue(chatMessage)
+
+        // läser från firebase vilket meddelande som är det senaste och visar det i MessagesActivity
 
         val latestMessageRef = FirebaseDatabase.getInstance()
             .getReference("/latest-messages/$fromId/$toId")

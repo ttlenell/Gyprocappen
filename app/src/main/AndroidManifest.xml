@@ -9,6 +9,15 @@
         android:roundIcon="@mipmap/gyp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+
+        <service
+            android:name=".services.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity android:name=".Activites.All.vatutskott.VatutskottActivity" />
         <activity android:name=".Activites.All.schedule.ScheduleActivity" />
         <activity android:name=".Activites.All.avvikelser.AvvikelserActivity" />
@@ -37,6 +46,12 @@
         <activity android:name=".Activites.All.messages.MessagesActivity" />
         <activity android:name=".Activites.All.registerlogin.RegisterActivity" />
         <activity android:name=".Activites.All.registerlogin.LoginActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
+
+
 
 </manifest>

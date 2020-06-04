@@ -31,12 +31,12 @@ class ChatWallFrom(val text: String, val user: User, private val timestamp: Stri
     }
 }
 
-class ChatWallFromOthers(val text: String, val user: User, private val timestamp : String) :
+class ChatWallFromOthers(val text: String, val user: User, private val dateToFirebase : String) :
     Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
 
         viewHolder.itemView.textView_chatwall_from_others_row.text = text
-        viewHolder.itemView.timeView_chatwall_from_others_row.text = timestamp
+        viewHolder.itemView.timeView_chatwall_from_others_row.text = dateToFirebase
         viewHolder.itemView.username_textview_chatwall_from_others_row.text = user.username
 
         val uri = user.profileImageUrl

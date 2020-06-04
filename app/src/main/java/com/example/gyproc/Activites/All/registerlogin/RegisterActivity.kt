@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.example.gyproc.R
 import com.example.gyproc.Activites.All.mainscreen.MainScreenActivity
@@ -28,6 +29,8 @@ class RegisterActivity : AppCompatActivity() {
             supportActionBar?.hide()
 
 
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
 
         register_button_register.setOnClickListener {
 
@@ -42,6 +45,8 @@ class RegisterActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+
+        // kommer åt enhetens mapp "image" för att välja foto
 
         select_user_photo.setOnClickListener {
             Log.d("Main","Try to show photo selector")
