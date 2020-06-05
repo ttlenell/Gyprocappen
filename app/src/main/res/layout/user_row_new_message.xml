@@ -11,13 +11,13 @@
         android:id="@+id/username_textview_newmessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="200dp"
         android:text="Username"
+        android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/imageview_newmessage_row"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageview_newmessage_row"
         app:layout_constraintTop_toTopOf="@+id/imageview_newmessage_row" />
 
     <de.hdodenhof.circleimageview.CircleImageView
